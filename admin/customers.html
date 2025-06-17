@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers - Beauty Store Admin</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/customers.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="dashboard.html" class="sidebar-brand">
+        <i class="fas fa-spa"></i> BeautyStore
+      </a>
+      <nav>
+        <a href="dashboard.html" class="nav-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="products.html" class="nav-link">
+          <i class="fas fa-box"></i> Products
+        </a>
+        <a href="orders.html" class="nav-link">
+          <i class="fas fa-shopping-cart"></i> Orders
+        </a>
+        <a href="customers.html" class="nav-link active">
+          <i class="fas fa-users"></i> Customers
+        </a>
+        <a href="categories.html" class="nav-link">
+          <i class="fas fa-tags"></i> Categories
+        </a>
+        <a href="inventory.html" class="nav-link">
+          <i class="fas fa-warehouse"></i> Inventory
+        </a>
+        <a href="settings.html" class="nav-link">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="login.html" class="nav-link">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="admin-header">
+        <div class="container-fluid">
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h3 mb-0">Customers</h1>
+            <div class="d-flex align-items-center">
+              <button class="btn btn-outline-secondary me-2">
+                <i class="fas fa-download me-2"></i>Export Customers
+              </button>
+              <div class="admin-profile">
+                <span>Welcome, Admin</span>
+                <img src="https://via.placeholder.com/40" alt="Admin" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <!-- Customer Filters -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select">
+                  <option value="">All Status</option>
+                  <option>Active</option>
+                  <option>Inactive</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Join Date</label>
+                <select class="form-select">
+                  <option>All Time</option>
+                  <option>Last 7 Days</option>
+                  <option>Last 30 Days</option>
+                  <option>Last Month</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Sort By</label>
+                <select class="form-select">
+                  <option>Join Date</option>
+                  <option>Total Orders</option>
+                  <option>Total Spent</option>
+                  <option>Name</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Search</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Name or email..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customers Grid -->
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="customer-card">
+              <div class="customer-profile">
+                <img src="https://via.placeholder.com/80" alt="Customer" />
+                <h5>John Doe</h5>
+                <p class="text-muted mb-2">john@example.com</p>
+                <div class="mb-3">
+                  <span class="status-indicator status-active"></span>
+                  <span>Active Customer</span>
+                </div>
+                <button
+                  class="btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#customerDetailsModal"
+                >
+                  View Details
+                </button>
+              </div>
+              <div class="customer-stats">
+                <div class="row">
+                  <div class="col-4 customer-stat-item">
+                    <div class="customer-stat-value">12</div>
+                    <div class="customer-stat-label">Orders</div>
+                  </div>
+                  <div class="col-4 customer-stat-item">
+                    <div class="customer-stat-value">$857</div>
+                    <div class="customer-stat-label">Spent</div>
+                  </div>
+                  <div class="col-4 customer-stat-item">
+                    <div class="customer-stat-value">4.8</div>
+                    <div class="customer-stat-label">Rating</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- More customer cards... -->
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-4">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Customer Details Modal -->
+    <div class="modal fade" id="customerDetailsModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Customer Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4 text-center">
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="Customer"
+                  class="rounded-circle mb-3"
+                />
+                <h5>John Doe</h5>
+                <p class="text-muted">Customer since June 2025</p>
+              </div>
+              <div class="col-md-8">
+                <h6>Personal Information</h6>
+                <div class="mb-3">
+                  <p class="mb-1"><strong>Email:</strong> john@example.com</p>
+                  <p class="mb-1"><strong>Phone:</strong> +1 234 567 890</p>
+                  <p class="mb-1">
+                    <strong>Address:</strong> 123 Main St, New York, NY 10001
+                  </p>
+                </div>
+
+                <h6 class="mt-4">Recent Activity</h6>
+                <div class="activity-timeline">
+                  <div class="activity-item">
+                    <div class="activity-date">2025-06-17</div>
+                    <div class="activity-action">Placed order #ORD-001</div>
+                    <div class="text-muted">2 items - $49.98</div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-date">2025-06-15</div>
+                    <div class="activity-action">Added items to wishlist</div>
+                    <div class="text-muted">
+                      Natural Moisturizer, Face Serum
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-date">2025-06-10</div>
+                    <div class="activity-action">Reviewed Night Cream</div>
+                    <div class="text-muted">5 stars - "Great product!"</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
