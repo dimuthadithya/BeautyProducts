@@ -1,3 +1,47 @@
+<?php
+session_start();
+require_once 'config/db_conn.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $emailOrUsername = $_POST['username']; 
+    $password = $_POST['password'];
+
+    // Look up user by email
+    $query = "SELECT * FROM users WHERE email = '$emailOrUsername' LIMIT 1";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
+
+        // Verify password
+        if (password_verify($password, $user['password_hash'])) {
+            // Store user info in session
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['user_name'] = $user['first_name'];
+            $_SESSION['user_role'] = $user['role'];
+
+            if ($user['role'] === 'admin') {
+                header("Location: admin/dashboard.php");
+                exit;
+            }
+            
+            if($user['role'] === 'customer') {
+                header("Location: index.php");
+                exit;
+            }
+            
+            echo "Login successful. <a href='dashboard.php'>Go to dashboard</a>";
+            exit;
+        } else {
+            echo "Incorrect password.";
+        }
+    } else {
+        echo "User not found.";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +64,7 @@
   <body class="login-page">
     <div class="login-container">
       <div class="login-logo"><i class="fas fa-spa"></i> BeautyStore</div>
-      <form action="dashboard.html" method="POST">
+      <form action="login.php" method="POST">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input

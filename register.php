@@ -1,3 +1,38 @@
+<?php
+include 'config/db_conn.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $firstName = $_POST['firstName'];
+  $lastName  = $_POST['lastName'];
+  $email     = $_POST['email'];
+  $phone     = $_POST['phone'];
+  $password  = $_POST['password'];
+  $confirmPassword = $_POST['confirmPassword'];
+
+  if ($password !== $confirmPassword) {
+    die("Passwords do not match.");
+  }
+
+  // Check if email already exists
+  $check = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+  if (mysqli_num_rows($check) > 0) {
+    die("Email already registered.");
+  }
+
+  $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+  $query = "INSERT INTO users (first_name, last_name, email, password_hash, phone)
+        VALUES ('$firstName', '$lastName', '$email', '$passwordHash', '$phone')";
+
+  if (mysqli_query($conn, $query)) {
+    echo "<script>alert('Registration successful! Please login.'); window.location.href='login.php';</script>";
+    exit();
+  } else {
+    echo "Error: " . mysqli_error($conn);
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -60,7 +95,7 @@
                 <h2>Create an Account</h2>
                 <p>Join BeautyStore to discover amazing beauty products</p>
               </div>
-              <form id="registerForm" class="auth-form">
+              <form id="registerForm" class="auth-form" action="register.php" method="POST">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -68,6 +103,7 @@
                       <input
                         type="text"
                         id="firstName"
+                        name="firstName"
                         class="form-control"
                         required
                       />
@@ -79,6 +115,7 @@
                       <input
                         type="text"
                         id="lastName"
+                        name="lastName"
                         class="form-control"
                         required
                       />
@@ -90,13 +127,14 @@
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     class="form-control"
                     required
                   />
                 </div>
                 <div class="form-group">
                   <label for="phone">Phone Number</label>
-                  <input type="tel" id="phone" class="form-control" required />
+                  <input type="tel" id="phone" name="phone" class="form-control" required />
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
@@ -104,6 +142,7 @@
                     <input
                       type="password"
                       id="password"
+                      name="password"
                       class="form-control"
                       required
                     />
@@ -116,6 +155,7 @@
                     <input
                       type="password"
                       id="confirmPassword"
+                      name="confirmPassword"
                       class="form-control"
                       required
                     />
@@ -181,26 +221,19 @@
       document
         .getElementById('registerForm')
         .addEventListener('submit', (e) => {
-          e.preventDefault();
+          
 
           const password = document.getElementById('password').value;
           const confirmPassword =
             document.getElementById('confirmPassword').value;
 
           if (password !== confirmPassword) {
+            e.preventDefault();
             alert('Passwords do not match!');
             return;
           }
 
-          // Here you would typically send the form data to your backend
-          console.log('Form submitted', {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            password: password
-          });
-
+          
           // Redirect to login page after successful registration
           // window.location.href = 'login.html';
         });

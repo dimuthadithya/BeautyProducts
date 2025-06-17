@@ -20,31 +20,7 @@
   </head>
   <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-      <a href="dashboard.html" class="sidebar-brand">
-        <i class="fas fa-spa"></i> BeautyStore
-      </a>
-      <nav>
-        <a href="dashboard.html" class="nav-link active">
-          <i class="fas fa-home"></i> Dashboard
-        </a>
-        <a href="products.html" class="nav-link">
-          <i class="fas fa-box"></i> Products
-        </a>
-        <a href="categories.html" class="nav-link">
-          <i class="fas fa-tags"></i> Categories
-        </a>
-        <a href="orders.html" class="nav-link">
-          <i class="fas fa-shopping-cart"></i> Orders
-        </a>
-        <a href="customers.html" class="nav-link">
-          <i class="fas fa-users"></i> Customers
-        </a>
-        <a href="login.html" class="nav-link">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-      </nav>
-    </div>
+  <?php include('include/sidebar.php'); ?>
 
     <!-- Main Content -->
     <div class="main-content">
