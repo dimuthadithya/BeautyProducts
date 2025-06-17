@@ -1,849 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout | GlamourGlow</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #e63946; /* Vibrant red */
-            --secondary: #457b9d; /* Deep blue */
-            --accent: #a8dadc; /* Light blue */
-            --dark: #1d3557; /* Navy blue */
-            --light: #f1faee; /* Soft off-white */
-            --text: #2b2d42; /* Dark gray-blue */
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 2rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-        
-        .cart-icon {
-            position: relative;
-        }
-        
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: var(--accent);
-            color: var(--dark);
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-        
-        .checkout-header {
-            background: linear-gradient(rgba(29, 53, 87, 0.8), rgba(29, 53, 87, 0.8)), url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 30vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: white;
-            margin-bottom: 3rem;
-        }
-        
-        .checkout-header-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .breadcrumb {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-        
-        .breadcrumb li {
-            margin: 0 0.5rem;
-        }
-        
-        .breadcrumb li:not(:last-child)::after {
-            content: '/';
-            margin-left: 1rem;
-            color: var(--accent);
-        }
-        
-        .breadcrumb a {
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .breadcrumb a:hover {
-            color: var(--accent);
-        }
-        
-        .checkout-container {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 5rem;
-        }
-        
-        .checkout-form {
-            flex: 2;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .checkout-summary {
-            flex: 1;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .form-row .form-group {
-            flex: 1;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.2);
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .checkbox-group input {
-            width: auto;
-            margin-right: 0.8rem;
-            accent-color: var(--primary);
-        }
-        
-        .payment-methods {
-            margin-top: 2rem;
-        }
-        
-        .payment-tabs {
-            display: flex;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 1.5rem;
-        }
-        
-        .payment-tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .payment-tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        
-        .payment-content {
-            display: none;
-        }
-        
-        .payment-content.active {
-            display: block;
-        }
-        
-        .payment-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 5px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .card-icons {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .card-icons img {
-            height: 30px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        
-        .summary-total {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--dark);
-            margin: 1.5rem 0;
-            padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .order-products {
-            margin: 1.5rem 0;
-        }
-        
-        .order-product {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .order-product:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .order-product-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-right: 1rem;
-        }
-        
-        .order-product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .order-product-info h4 {
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
-        }
-        
-        .order-product-info p {
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
-        
-        .order-product-price {
-            margin-left: auto;
-            font-weight: 600;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background-color: var(--dark);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            margin-top: 1rem;
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .secure-checkout {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1.5rem;
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
-        
-        .secure-checkout i {
-            margin-right: 0.5rem;
-            color: var(--primary);
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 0 1rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #334155;
-            border-radius: 50%;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 992px) {
-            .checkout-container {
-                flex-direction: column;
-            }
-            
-            .checkout-summary {
-                position: static;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .checkout-header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .payment-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .payment-tab {
-                flex: 1;
-                text-align: center;
-                padding: 0.8rem 0.5rem;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/checkout.css" />
+  </head>
+  <body>
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-spa"></i>
-                    <span>GlamourGlow</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li>
-                        <a href="cart.html" class="cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-count">3</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <i class="fas fa-spa"></i>
+            <span>GlamourGlow</span>
+          </div>
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li>
+              <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">3</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <section class="checkout-header">
-        <div class="container checkout-header-content">
-            <h1>Checkout</h1>
-            <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
-            </ul>
-        </div>
+      <div class="container checkout-header-content">
+        <h1>Checkout</h1>
+        <ul class="breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
+        </ul>
+      </div>
     </section>
 
     <div class="container">
-        <div class="checkout-container">
-            <div class="checkout-form">
-                <h2 class="section-title">Billing Details</h2>
-                <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="address">Street Address</label>
-                        <input type="text" id="address" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="country">Country</label>
-                            <select id="country" required>
-                                <option value="">Select Country</option>
-                                <option value="US">United States</option>
-                                <option value="UK">United Kingdom</option>
-                                <option value="CA">Canada</option>
-                                <option value="AU">Australia</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" id="city" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="state">State/Province</label>
-                            <input type="text" id="state" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="zip">ZIP/Postal Code</label>
-                            <input type="text" id="zip" required>
-                        </div>
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="create-account">
-                        <label for="create-account">Create an account for faster checkout next time</label>
-                    </div>
-                    
-                    <h2 class="section-title">Shipping Method</h2>
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="radio" id="standard-shipping" name="shipping" checked>
-                            <label for="standard-shipping">Standard Shipping (Free) - 3-5 business days</label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="radio" id="express-shipping" name="shipping">
-                            <label for="express-shipping">Express Shipping ($9.99) - 1-2 business days</label>
-                        </div>
-                    </div>
-                    
-                    <h2 class="section-title">Payment Method</h2>
-                    <div class="payment-methods">
-                        <div class="payment-tabs">
-                            <div class="payment-tab active" data-tab="credit-card">Credit Card</div>
-                            <div class="payment-tab" data-tab="paypal">PayPal</div>
-                            <div class="payment-tab" data-tab="apple-pay">Apple Pay</div>
-                        </div>
-                        
-                        <div class="payment-content active" id="credit-card">
-                            <div class="payment-card">
-                                <div class="card-icons">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg" alt="Visa">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicon/devicon/icons/mastercard/mastercard-original.svg" alt="Mastercard">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicon/devicon/icons/apple/apple-original.svg" alt="Apple Pay">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="card-number">Card Number</label>
-                                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="card-name">Name on Card</label>
-                                    <input type="text" id="card-name" required>
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="expiry-date">Expiry Date</label>
-                                        <input type="text" id="expiry-date" placeholder="MM/YY" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cvv">CVV</label>
-                                        <input type="text" id="cvv" placeholder="123" required>
-                                    </div>
-                                </div>
-                                
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="save-card" checked>
-                                    <label for="save-card">Save card for future purchases</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-content" id="paypal">
-                            <p>You'll be redirected to PayPal to complete your purchase securely.</p>
-                            <button type="button" class="btn" style="background-color: #003087; margin-top: 1rem;">
-                                <i class="fab fa-paypal"></i> Continue with PayPal
-                            </button>
-                        </div>
-                        
-                        <div class="payment-content" id="apple-pay">
-                            <p>Complete your purchase quickly and securely with Apple Pay.</p>
-                            <button type="button" class="btn" style="background-color: #000; margin-top: 1rem;">
-                                <i class="fab fa-apple"></i> Pay with Apple Pay
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="order-notes">Order Notes (Optional)</label>
-                        <textarea id="order-notes" rows="4" placeholder="Special instructions, delivery preferences, etc."></textarea>
-                    </div>
-                </form>
+      <div class="checkout-container">
+        <div class="checkout-form">
+          <h2 class="section-title">Billing Details</h2>
+          <form>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" required />
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" required />
+              </div>
             </div>
-            
-            <div class="checkout-summary">
-                <h3 class="section-title">Your Order</h3>
-                
-                <div class="order-products">
-                    <div class="order-product">
-                        <div class="order-product-img">
-                            <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80" alt="Rose Quartz Facial Serum">
-                        </div>
-                        <div class="order-product-info">
-                            <h4>Rose Quartz Facial Serum</h4>
-                            <p>1 × $34.99</p>
-                        </div>
-                        <div class="order-product-price">$34.99</div>
-                    </div>
-                    
-                    <div class="order-product">
-                        <div class="order-product-img">
-                            <img src="https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Hydrating Face Cream">
-                        </div>
-                        <div class="order-product-info">
-                            <h4>Hydrating Face Cream</h4>
-                            <p>2 × $28.99</p>
-                        </div>
-                        <div class="order-product-price">$57.98</div>
-                    </div>
-                    
-                    <div class="order-product">
-                        <div class="order-product-img">
-                            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Volumizing Mascara">
-                        </div>
-                        <div class="order-product-info">
-                            <h4>Volumizing Mascara</h4>
-                            <p>1 × $22.99</p>
-                        </div>
-                        <div class="order-product-price">$22.99</div>
-                    </div>
-                </div>
-                
-                <div class="summary-item">
-                    <span>Subtotal</span>
-                    <span>$115.96</span>
-                </div>
-                
-                <div class="summary-item">
-                    <span>Discount</span>
-                    <span>-$15.00</span>
-                </div>
-                
-                <div class="summary-item">
-                    <span>Shipping</span>
-                    <span>Free</span>
-                </div>
-                
-                <div class="summary-item">
-                    <span>Tax</span>
-                    <span>$9.28</span>
-                </div>
-                
-                <div class="summary-total">
-                    <span>Total</span>
-                    <span>$110.24</span>
-                </div>
-                
-                <button type="submit" class="btn">Place Order</button>
-                <a href="cart.html" class="btn btn-outline">Back to Cart</a>
-                
-                <div class="secure-checkout">
-                    <i class="fas fa-lock"></i>
-                    <span>Secure Checkout</span>
-                </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" required />
             </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" required />
+            </div>
+
+            <div class="form-group">
+              <label for="address">Street Address</label>
+              <input type="text" id="address" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" required>
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="CA">Canada</option>
+                  <option value="AU">Australia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="state">State/Province</label>
+                <input type="text" id="state" required />
+              </div>
+              <div class="form-group">
+                <label for="zip">ZIP/Postal Code</label>
+                <input type="text" id="zip" required />
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="create-account" />
+              <label for="create-account"
+                >Create an account for faster checkout next time</label
+              >
+            </div>
+
+            <h2 class="section-title">Shipping Method</h2>
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input
+                  type="radio"
+                  id="standard-shipping"
+                  name="shipping"
+                  checked
+                />
+                <label for="standard-shipping"
+                  >Standard Shipping (Free) - 3-5 business days</label
+                >
+              </div>
+              <div class="checkbox-group">
+                <input type="radio" id="express-shipping" name="shipping" />
+                <label for="express-shipping"
+                  >Express Shipping ($9.99) - 1-2 business days</label
+                >
+              </div>
+            </div>
+
+            <h2 class="section-title">Payment Method</h2>
+            <div class="payment-methods">
+              <div class="payment-tabs">
+                <div class="payment-tab active" data-tab="credit-card">
+                  Credit Card
+                </div>
+                <div class="payment-tab" data-tab="paypal">PayPal</div>
+                <div class="payment-tab" data-tab="apple-pay">Apple Pay</div>
+              </div>
+
+              <div class="payment-content active" id="credit-card">
+                <div class="payment-card">
+                  <div class="card-icons">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg"
+                      alt="Visa"
+                    />
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicon/devicon/icons/mastercard/mastercard-original.svg"
+                      alt="Mastercard"
+                    />
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicon/devicon/icons/apple/apple-original.svg"
+                      alt="Apple Pay"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input
+                      type="text"
+                      id="card-number"
+                      placeholder="1234 5678 9012 3456"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" required />
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="expiry-date">Expiry Date</label>
+                      <input
+                        type="text"
+                        id="expiry-date"
+                        placeholder="MM/YY"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="cvv">CVV</label>
+                      <input type="text" id="cvv" placeholder="123" required />
+                    </div>
+                  </div>
+
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="save-card" checked />
+                    <label for="save-card"
+                      >Save card for future purchases</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="payment-content" id="paypal">
+                <p>
+                  You'll be redirected to PayPal to complete your purchase
+                  securely.
+                </p>
+                <button
+                  type="button"
+                  class="btn"
+                  style="background-color: #003087; margin-top: 1rem"
+                >
+                  <i class="fab fa-paypal"></i> Continue with PayPal
+                </button>
+              </div>
+
+              <div class="payment-content" id="apple-pay">
+                <p>
+                  Complete your purchase quickly and securely with Apple Pay.
+                </p>
+                <button
+                  type="button"
+                  class="btn"
+                  style="background-color: #000; margin-top: 1rem"
+                >
+                  <i class="fab fa-apple"></i> Pay with Apple Pay
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="order-notes">Order Notes (Optional)</label>
+              <textarea
+                id="order-notes"
+                rows="4"
+                placeholder="Special instructions, delivery preferences, etc."
+              ></textarea>
+            </div>
+          </form>
         </div>
+
+        <div class="checkout-summary">
+          <h3 class="section-title">Your Order</h3>
+
+          <div class="order-products">
+            <div class="order-product">
+              <div class="order-product-img">
+                <img
+                  src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80"
+                  alt="Rose Quartz Facial Serum"
+                />
+              </div>
+              <div class="order-product-info">
+                <h4>Rose Quartz Facial Serum</h4>
+                <p>1 × $34.99</p>
+              </div>
+              <div class="order-product-price">$34.99</div>
+            </div>
+
+            <div class="order-product">
+              <div class="order-product-img">
+                <img
+                  src="https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+                  alt="Hydrating Face Cream"
+                />
+              </div>
+              <div class="order-product-info">
+                <h4>Hydrating Face Cream</h4>
+                <p>2 × $28.99</p>
+              </div>
+              <div class="order-product-price">$57.98</div>
+            </div>
+
+            <div class="order-product">
+              <div class="order-product-img">
+                <img
+                  src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+                  alt="Volumizing Mascara"
+                />
+              </div>
+              <div class="order-product-info">
+                <h4>Volumizing Mascara</h4>
+                <p>1 × $22.99</p>
+              </div>
+              <div class="order-product-price">$22.99</div>
+            </div>
+          </div>
+
+          <div class="summary-item">
+            <span>Subtotal</span>
+            <span>$115.96</span>
+          </div>
+
+          <div class="summary-item">
+            <span>Discount</span>
+            <span>-$15.00</span>
+          </div>
+
+          <div class="summary-item">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+
+          <div class="summary-item">
+            <span>Tax</span>
+            <span>$9.28</span>
+          </div>
+
+          <div class="summary-total">
+            <span>Total</span>
+            <span>$110.24</span>
+          </div>
+
+          <button type="submit" class="btn">Place Order</button>
+          <a href="cart.html" class="btn btn-outline">Back to Cart</a>
+
+          <div class="secure-checkout">
+            <i class="fas fa-lock"></i>
+            <span>Secure Checkout</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>GlamourGlow</h3>
-                    <p>Your destination for premium, natural beauty products that enhance your natural glow.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Shop</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Skincare</a></li>
-                        <li><a href="#">Makeup</a></li>
-                        <li><a href="#">Hair Care</a></li>
-                        <li><a href="#">Body Care</a></li>
-                        <li><a href="#">Fragrance</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Customer Service</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Shipping & Returns</a></li>
-                        <li><a href="#">Track Order</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>About Us</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Our Story</a></li>
-                        <li><a href="#">Ingredients</a></li>
-                        <li><a href="#">Sustainability</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Careers</a></li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>GlamourGlow</h3>
+            <p>
+              Your destination for premium, natural beauty products that enhance
+              your natural glow.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-pinterest-p"></i></a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 GlamourGlow. All rights reserved.</p>
-            </div>
+          </div>
+          <div class="footer-column">
+            <h3>Shop</h3>
+            <ul class="footer-links">
+              <li><a href="#">Skincare</a></li>
+              <li><a href="#">Makeup</a></li>
+              <li><a href="#">Hair Care</a></li>
+              <li><a href="#">Body Care</a></li>
+              <li><a href="#">Fragrance</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Customer Service</h3>
+            <ul class="footer-links">
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Shipping & Returns</a></li>
+              <li><a href="#">Track Order</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>About Us</h3>
+            <ul class="footer-links">
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Ingredients</a></li>
+              <li><a href="#">Sustainability</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>&copy; 2023 GlamourGlow. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
 
     <script>
-        // Simple tab switching functionality
-        document.querySelectorAll('.payment-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs and content
-                document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.payment-content').forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked tab and corresponding content
-                tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
+      // Simple tab switching functionality
+      document.querySelectorAll('.payment-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs and content
+          document
+            .querySelectorAll('.payment-tab')
+            .forEach((t) => t.classList.remove('active'));
+          document
+            .querySelectorAll('.payment-content')
+            .forEach((c) => c.classList.remove('active'));
+
+          // Add active class to clicked tab and corresponding content
+          tab.classList.add('active');
+          const tabId = tab.getAttribute('data-tab');
+          document.getElementById(tabId).classList.add('active');
         });
-        
-        // Format credit card number input
-        const cardNumberInput = document.getElementById('card-number');
-        if (cardNumberInput) {
-            cardNumberInput.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                let matches = value.match(/\d{4,16}/g);
-                let match = matches && matches[0] || '';
-                let parts = [];
-                
-                for (let i = 0, len = match.length; i < len; i += 4) {
-                    parts.push(match.substring(i, i + 4));
-                }
-                
-                if (parts.length) {
-                    e.target.value = parts.join(' ');
-                } else {
-                    e.target.value = value;
-                }
-            });
-        }
-        
-        // Format expiry date input
-        const expiryInput = document.getElementById('expiry-date');
-        if (expiryInput) {
-            expiryInput.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                if (value.length > 2) {
-                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                }
-                e.target.value = value;
-            });
-        }
+      });
+
+      // Format credit card number input
+      const cardNumberInput = document.getElementById('card-number');
+      if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function (e) {
+          let value = e.target.value
+            .replace(/\s+/g, '')
+            .replace(/[^0-9]/gi, '');
+          let matches = value.match(/\d{4,16}/g);
+          let match = (matches && matches[0]) || '';
+          let parts = [];
+
+          for (let i = 0, len = match.length; i < len; i += 4) {
+            parts.push(match.substring(i, i + 4));
+          }
+
+          if (parts.length) {
+            e.target.value = parts.join(' ');
+          } else {
+            e.target.value = value;
+          }
+        });
+      }
+
+      // Format expiry date input
+      const expiryInput = document.getElementById('expiry-date');
+      if (expiryInput) {
+        expiryInput.addEventListener('input', function (e) {
+          let value = e.target.value
+            .replace(/\s+/g, '')
+            .replace(/[^0-9]/gi, '');
+          if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+          }
+          e.target.value = value;
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
