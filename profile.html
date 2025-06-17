@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - Beauty Store</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/footer.css" />
+    <link rel="stylesheet" href="assets/css/profile.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beauty Store</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="shop.html">Shop</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="profile.html">
+                <i class="fas fa-user"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cart.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">3</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <!-- Profile Sidebar -->
+            <div class="profile-sidebar">
+              <div class="profile-header">
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <h4>John Doe</h4>
+                <p>john.doe@example.com</p>
+              </div>
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    href="#personal-info"
+                    data-bs-toggle="tab"
+                  >
+                    <i class="fas fa-user"></i> Personal Information
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#orders" data-bs-toggle="tab">
+                    <i class="fas fa-shopping-bag"></i> My Orders
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#addresses" data-bs-toggle="tab">
+                    <i class="fas fa-map-marker-alt"></i> Addresses
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#wishlist" data-bs-toggle="tab">
+                    <i class="fas fa-heart"></i> Wishlist
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#settings" data-bs-toggle="tab">
+                    <i class="fas fa-cog"></i> Settings
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <!-- Profile Content -->
+            <div class="tab-content">
+              <!-- Personal Information -->
+              <div class="tab-pane fade show active" id="personal-info">
+                <div class="profile-card">
+                  <h4>Personal Information</h4>
+                  <form>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" value="John" />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" value="Doe" />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        value="john.doe@example.com"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Phone</label>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        value="(123) 456-7890"
+                      />
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                      Save Changes
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Orders -->
+              <div class="tab-pane fade" id="orders">
+                <div class="profile-card">
+                  <h4>My Orders</h4>
+                  <div class="order-list">
+                    <div class="order-item">
+                      <div class="order-header">
+                        <div>
+                          <h6>Order #ORD-2025-06-17</h6>
+                          <p class="text-muted">June 17, 2025</p>
+                        </div>
+                        <span class="badge bg-success">Delivered</span>
+                      </div>
+                      <div class="order-details">
+                        <p>2 Items • Total: LKR 76.47</p>
+                        <a
+                          href="order-details.html"
+                          class="btn btn-outline-primary btn-sm"
+                          >View Details</a
+                        >
+                      </div>
+                    </div>
+                    <div class="order-item">
+                      <div class="order-header">
+                        <div>
+                          <h6>Order #ORD-2025-06-15</h6>
+                          <p class="text-muted">June 15, 2025</p>
+                        </div>
+                        <span class="badge bg-primary">Processing</span>
+                      </div>
+                      <div class="order-details">
+                        <p>1 Item • Total: LKR 34.99</p>
+                        <a
+                          href="order-details.html"
+                          class="btn btn-outline-primary btn-sm"
+                          >View Details</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Addresses -->
+              <div class="tab-pane fade" id="addresses">
+                <div class="profile-card">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                  >
+                    <h4>My Addresses</h4>
+                    <button class="btn btn-primary btn-sm">
+                      <i class="fas fa-plus"></i> Add New Address
+                    </button>
+                  </div>
+                  <div class="address-list">
+                    <div class="address-item">
+                      <div class="address-header">
+                        <h6>Home</h6>
+                        <span class="badge bg-primary">Default</span>
+                      </div>
+                      <p>
+                        123 Beauty Street<br />
+                        New York, NY 10001<br />
+                        United States
+                      </p>
+                      <div class="address-actions">
+                        <button class="btn btn-outline-primary btn-sm">
+                          Edit
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                    <div class="address-item">
+                      <div class="address-header">
+                        <h6>Office</h6>
+                      </div>
+                      <p>
+                        456 Work Avenue<br />
+                        New York, NY 10002<br />
+                        United States
+                      </p>
+                      <div class="address-actions">
+                        <button class="btn btn-outline-primary btn-sm">
+                          Edit
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Wishlist -->
+              <div class="tab-pane fade" id="wishlist">
+                <div class="profile-card">
+                  <h4>My Wishlist</h4>
+                  <div class="wishlist-items">
+                    <div class="wishlist-item">
+                      <img
+                        src="https://via.placeholder.com/100"
+                        alt="Product"
+                        class="wishlist-image"
+                      />
+                      <div class="wishlist-details">
+                        <h6>Natural Face Serum</h6>
+                        <p class="price">LKR 29.99</p>
+                        <button class="btn btn-primary btn-sm">
+                          Add to Cart
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="wishlist-item">
+                      <img
+                        src="https://via.placeholder.com/100"
+                        alt="Product"
+                        class="wishlist-image"
+                      />
+                      <div class="wishlist-details">
+                        <h6>Organic Face Mask</h6>
+                        <p class="price">LKR 19.99</p>
+                        <button class="btn btn-primary btn-sm">
+                          Add to Cart
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Settings -->
+              <div class="tab-pane fade" id="settings">
+                <div class="profile-card">
+                  <h4>Account Settings</h4>
+                  <form>
+                    <div class="mb-3">
+                      <label class="form-label">Change Password</label>
+                      <input
+                        type="password"
+                        class="form-control mb-2"
+                        placeholder="Current Password"
+                      />
+                      <input
+                        type="password"
+                        class="form-control mb-2"
+                        placeholder="New Password"
+                      />
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Confirm New Password"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email Notifications</label>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          checked
+                        />
+                        <label class="form-check-label">Order updates</label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          checked
+                        />
+                        <label class="form-check-label"
+                          >Promotions and offers</label
+                        >
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" />
+                        <label class="form-check-label">Newsletter</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                      Save Changes
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>About Us</h5>
+            <p>Your trusted source for premium beauty products.</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="shop.html">Shop</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact Us</h5>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+              <li><i class="fas fa-envelope"></i> info@beautystore.com</li>
+              <li>
+                <i class="fas fa-map-marker-alt"></i> 123 Beauty Street, NY
+                10001
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2025 Beauty Store. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

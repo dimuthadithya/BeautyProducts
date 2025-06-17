@@ -1,0 +1,56 @@
+body {
+    padding-top: 76px;
+}
+
+.about-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3')
+        center/cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.value-card {
+    text-align: center;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-icon {
+    font-size: 2.5rem;
+    color: #ff4f81;
+    margin-bottom: 20px;
+}
+
+.team-member {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.team-member img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.social-links-team a {
+    color: #333;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-links-team a:hover {
+    color: #ff4f81;
+}

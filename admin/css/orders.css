@@ -1,0 +1,108 @@
+/* Orders Page Specific Styles */
+.order-status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.status-processing {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.status-shipped {
+    background-color: #007bff;
+    color: white;
+}
+
+.status-delivered {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+.order-table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.order-details {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.order-summary {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.order-summary hr {
+    margin: 15px 0;
+}
+
+.total-row {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.tracking-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.tracking-item {
+    position: relative;
+    padding-bottom: 25px;
+}
+
+.tracking-item:before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ff4f81;
+}
+
+.tracking-item:after {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 12px;
+    width: 2px;
+    height: 100%;
+    background-color: #dee2e6;
+}
+
+.tracking-item:last-child:after {
+    display: none;
+}
+
+.tracking-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.tracking-status {
+    font-weight: 500;
+    margin: 5px 0;
+}

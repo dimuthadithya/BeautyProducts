@@ -1,410 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Glow & Bloom Beauty</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Beauty Store</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/footer.css" />
     <style>
-        :root {
-            --primary: #e63946; /* Vibrant red */
-            --secondary: #457b9d; /* Deep blue */
-            --accent: #a8dadc; /* Light blue */
-            --dark: #1d3557; /* Navy blue */
-            --light: #f1faee; /* Soft off-white */
-            --text: #2b2d42; /* Dark gray-blue */
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--dark), var(--secondary));
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .contact-info {
-            flex: 1;
-            min-width: 300px;
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .contact-form {
-            flex: 1;
-            min-width: 300px;
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        h2 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 2rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary);
-        }
-        
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-        
-        .info-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-right: 20px;
-            margin-top: 5px;
-        }
-        
-        .info-content h3 {
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-        
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border 0.3s ease;
-        }
-        
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background-color: var(--dark);
-            transform: translateY(-3px);
-        }
-        
-        .map-container {
-            margin-bottom: 60px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .map-container iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-        }
-        
-        .faq-section {
-            background-color: white;
-            padding: 60px;
-            border-radius: 10px;
-            margin-bottom: 60px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .faq-item {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-        
-        .faq-question {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .faq-answer {
-            display: none;
-            padding-top: 10px;
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 60px;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .contact-container {
-                flex-direction: column;
-            }
-            
-            .faq-section {
-                padding: 30px 20px;
-            }
-        }
+      body {
+        padding-top: 76px;
+      }
+
+      .contact-info-card {
+        padding: 30px;
+        text-align: center;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+      }
+
+      .contact-info-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .contact-icon {
+        font-size: 2.5rem;
+        color: #ff4f81;
+        margin-bottom: 20px;
+      }
+
+      .contact-form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .map-container {
+        height: 400px;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+      }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Contact Us</h1>
-            <p class="tagline">We'd love to hear from you! Reach out with questions, feedback, or just to say hello.</p>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">BeautyStore</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="shop.html">Shop</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item shopping-cart">
+              <a class="nav-link" href="cart.html"
+                ><i class="fas fa-shopping-cart"></i
+              ></a>
+              <span class="cart-count">0</span>
+            </li>
+          </ul>
         </div>
-    </header>
-    
-    <main class="container">
-        <div class="contact-container">
-            <div class="contact-info">
-                <h2>Get in Touch</h2>
-                <p>Our customer care team is available to assist you with any questions about our products, orders, or your beauty routine.</p>
-                
-                <div class="info-item">
-                    <div class="info-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Our Headquarters</h3>
-                        <p>123 Beauty Lane, Suite 400<br>San Francisco, CA 94108</p>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-icon">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Phone Support</h3>
-                        <p>+1 (800) 555-BEAU (2328)<br>Monday-Friday: 9am-6pm EST</p>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Email Us</h3>
-                        <p>hello@glowandbloom.com<br>We typically reply within 24 hours</p>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-icon">
-                        <i class="fas fa-comment-dots"></i>
-                    </div>
-                    <div class="info-content">
-                        <h3>Live Chat</h3>
-                        <p>Available on our website<br>Monday-Friday: 10am-5pm EST</p>
-                    </div>
-                </div>
+      </div>
+    </nav>
+
+    <!-- Contact Information -->
+    <section class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Get in Touch</h2>
+        <div class="row">
+          <div class="col-md-4" data-aos="fade-up">
+            <div class="contact-info-card">
+              <i class="fas fa-map-marker-alt contact-icon"></i>
+              <h4>Visit Us</h4>
+              <p>123 Beauty Street<br />New York, NY 10001</p>
             </div>
-            
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="contact-info-card">
+              <i class="fas fa-phone contact-icon"></i>
+              <h4>Call Us</h4>
+              <p>+1 234 567 890<br />+1 234 567 891</p>
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="contact-info-card">
+              <i class="fas fa-envelope contact-icon"></i>
+              <h4>Email Us</h4>
+              <p>info@beautystore.com<br />support@beautystore.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-4" data-aos="fade-right">
             <div class="contact-form">
-                <h2>Send Us a Message</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <select id="subject" name="subject">
-                            <option value="">Select a topic</option>
-                            <option value="product">Product Question</option>
-                            <option value="order">Order Inquiry</option>
-                            <option value="returns">Returns & Exchanges</option>
-                            <option value="feedback">Product Feedback</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
+              <h3 class="mb-4">Send us a Message</h3>
+              <form>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Your Name</label>
+                  <input type="text" class="form-control" id="name" required />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="subject" class="form-label">Subject</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subject"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea
+                    class="form-control"
+                    id="message"
+                    rows="5"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark">Send Message</button>
+              </form>
             </div>
+          </div>
+          <div class="col-md-6" data-aos="fade-left">
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.119763973046!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1657612365445!5m2!1sen!2s"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+              >
+              </iframe>
+            </div>
+          </div>
         </div>
-        
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.138045730035!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ2JzI5LjYiTiAxMjLCsDI1JzA5LjkiVw!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">
+          Frequently Asked Questions
+        </h2>
+        <div class="row justify-content-center">
+          <div class="col-md-8" data-aos="fade-up">
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                  >
+                    What are your shipping rates?
+                  </button>
+                </h2>
+                <div
+                  id="faq1"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    We offer free shipping on orders over LKR 50. For orders
+                    under LKR 50, shipping rates start at LKR 5.99.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq2"
+                  >
+                    What is your return policy?
+                  </button>
+                </h2>
+                <div
+                  id="faq2"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    We accept returns within 30 days of purchase. Items must be
+                    unused and in original packaging.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq3"
+                  >
+                    Do you offer international shipping?
+                  </button>
+                </h2>
+                <div
+                  id="faq3"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#faqAccordion"
+                >
+                  <div class="accordion-body">
+                    Yes, we ship to most countries worldwide. International
+                    shipping rates vary by location.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div class="faq-section">
-            <h2>Frequently Asked Questions</h2>
-            <p>Quick answers to common questions about our products and services.</p>
-            
-            <div class="faq-item">
-                <div class="faq-question">What are your customer service hours?</div>
-                <div class="faq-answer">
-                    <p>Our customer care team is available Monday through Friday from 9am to 6pm EST. You can reach us by phone at (800) 555-BEAU (2328) or by email at hello@glowandbloom.com. Live chat is available Monday-Friday from 10am-5pm EST.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">How can I track my order?</div>
-                <div class="faq-answer">
-                    <p>Once your order ships, you'll receive a confirmation email with tracking information. You can also log into your account on our website to view your order status and tracking details.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">What is your return policy?</div>
-                <div class="faq-answer">
-                    <p>We offer a 30-day satisfaction guarantee. If you're not completely happy with your purchase, you can return it within 30 days of delivery for a full refund or exchange. Products must be at least 50% full to qualify for a return.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Are your products cruelty-free and vegan?</div>
-                <div class="faq-answer">
-                    <p>Yes! All Glow & Bloom products are cruelty-free and never tested on animals. About 85% of our products are vegan (we clearly label which products contain animal-derived ingredients like honey or beeswax).</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Do you offer international shipping?</div>
-                <div class="faq-answer">
-                    <p>Currently, we ship to the United States, Canada, and the UK. We're working to expand to more countries soon. International orders may be subject to customs fees upon delivery.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-    
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>&copy; 2023 Glow & Bloom Beauty. All rights reserved.</p>
-            <p>Clean Beauty. Conscious Choices. Visible Results.</p>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h3 class="footer-heading">BeautyStore</h3>
+            <p>
+              Your one-stop destination for all beauty needs. We provide
+              high-quality beauty products that enhance your natural beauty.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h3 class="footer-heading">Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="shop.html">Shop</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h3 class="footer-heading">Contact Info</h3>
+            <ul class="footer-links">
+              <li><i class="fas fa-phone me-2"></i> +1 234 567 890</li>
+              <li><i class="fas fa-envelope me-2"></i> info@beautystore.com</li>
+              <li>
+                <i class="fas fa-map-marker-alt me-2"></i> 123 Beauty Street, NY
+                10001
+              </li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 BeautyStore. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Simple FAQ toggle functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
-                const isOpen = answer.style.display === 'block';
-                
-                // Close all answers first
-                document.querySelectorAll('.faq-answer').forEach(ans => {
-                    ans.style.display = 'none';
-                    ans.previousElementSibling.innerHTML = ans.previousElementSibling.innerHTML.replace('−', '+');
-                });
-                
-                // Toggle the clicked one
-                if (!isOpen) {
-                    answer.style.display = 'block';
-                    question.innerHTML = question.innerHTML.replace('+', '−');
-                }
-            });
-        });
+      AOS.init({
+        duration: 1000,
+        once: true
+      });
     </script>
-</body>
+  </body>
 </html>

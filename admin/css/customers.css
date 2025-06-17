@@ -1,0 +1,107 @@
+/* Customers Page Specific Styles */
+.customer-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.customer-card:hover {
+    transform: translateY(-5px);
+}
+
+.customer-profile {
+    text-align: center;
+    padding: 20px;
+}
+
+.customer-profile img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.customer-stats {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 0 0 10px 10px;
+}
+
+.customer-stat-item {
+    text-align: center;
+}
+
+.customer-stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ff4f81;
+}
+
+.customer-stat-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.activity-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.activity-item {
+    position: relative;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.activity-item:before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ff4f81;
+}
+
+.activity-item:after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 10px;
+    width: 2px;
+    height: 100%;
+    background-color: #dee2e6;
+}
+
+.activity-item:last-child:after {
+    display: none;
+}
+
+.activity-date {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.activity-action {
+    font-weight: 500;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-active {
+    background-color: #28a745;
+}
+
+.status-inactive {
+    background-color: #dc3545;
+}
