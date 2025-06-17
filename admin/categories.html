@@ -231,10 +231,10 @@
       // Alert function
       function showAlert(message, type) {
         const alertDiv = document.createElement('div');
-        alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+        alertDiv.className = `alert alert-LKR {type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
         alertDiv.setAttribute('role', 'alert');
         alertDiv.innerHTML = `
-          ${message}
+          LKR {message}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         `;
         document.body.appendChild(alertDiv);
