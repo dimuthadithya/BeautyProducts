@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - Beauty Store</title>
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/product-details.css" />
+    <link rel="stylesheet" href="assets/css/footer.css" />
+
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-left">
+        <a href="index.html" class="logo">Beauty</a>
+        <div class="nav-links">
+          <a href="shop.html">Shop</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
+      </div>
+    </nav>
+
+    <!-- Product Details Section -->
+    <main class="product-details">
+      <div class="product-container">
+        <div class="product-images">
+          <div class="main-image">
+            <img
+              src="assets/images/product1.jpg"
+              alt="Product Image"
+              id="mainImage"
+            />
+          </div>
+          <div class="thumbnail-images">
+            <img
+              src="assets/images/product1.jpg"
+              alt="Thumbnail 1"
+              onclick="changeImage(this.src)"
+            />
+            <img
+              src="assets/images/product1-2.jpg"
+              alt="Thumbnail 2"
+              onclick="changeImage(this.src)"
+            />
+            <img
+              src="assets/images/product1-3.jpg"
+              alt="Thumbnail 3"
+              onclick="changeImage(this.src)"
+            />
+          </div>
+        </div>
+        <div class="product-info">
+          <h1 class="product-title">Premium Beauty Product</h1>
+          <div class="product-rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+            <span>(4.5/5 - 128 reviews)</span>
+          </div>
+          <div class="product-price">
+            <span class="current-price">$49.99</span>
+            <span class="original-price">$59.99</span>
+            <span class="discount">17% OFF</span>
+          </div>
+          <div class="product-description">
+            <h3>Description</h3>
+            <p>
+              Experience the ultimate in beauty care with our premium product.
+              This specially formulated solution provides deep nourishment and
+              lasting results. Perfect for all skin types and dermatologically
+              tested for your safety.
+            </p>
+          </div>
+          <div class="product-variant">
+            <h3>Size</h3>
+            <div class="variant-options">
+              <button class="variant-btn active">30ml</button>
+              <button class="variant-btn">50ml</button>
+              <button class="variant-btn">100ml</button>
+            </div>
+          </div>
+          <div class="quantity-selector">
+            <h3>Quantity</h3>
+            <div class="quantity-controls">
+              <button onclick="decrementQuantity()">-</button>
+              <input type="number" id="quantity" value="1" min="1" max="10" />
+              <button onclick="incrementQuantity()">+</button>
+            </div>
+          </div>
+          <div class="product-actions">
+            <button class="add-to-cart-btn">Add to Cart</button>
+            <button class="buy-now-btn">Buy Now</button>
+          </div>
+          <div class="additional-info">
+            <div class="info-item">
+              <i class="fas fa-truck"></i>
+              <span>Free shipping on orders over $50</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-undo"></i>
+              <span>30-day return policy</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-shield-alt"></i>
+              <span>Secure checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>Your trusted destination for premium beauty products.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Beauty Store. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      function changeImage(src) {
+        document.getElementById('mainImage').src = src;
+      }
+
+      function incrementQuantity() {
+        const input = document.getElementById('quantity');
+        if (input.value < 10) {
+          input.value = parseInt(input.value) + 1;
+        }
+      }
+
+      function decrementQuantity() {
+        const input = document.getElementById('quantity');
+        if (input.value > 1) {
+          input.value = parseInt(input.value) - 1;
+        }
+      }
+    </script>
+  </body>
+</html>
