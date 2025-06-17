@@ -1,0 +1,128 @@
+/* Cart Section Styles */
+.cart-section {
+    padding: 100px 0 60px;
+}
+
+.section-title {
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Cart Item Styles */
+.cart-item {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item img {
+    border-radius: 8px;
+}
+
+.cart-item h5 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.btn-qty {
+    background: #f8f9fa;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.quantity input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 5px 0;
+}
+
+.price {
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.btn-remove {
+    color: #dc3545;
+    padding: 5px;
+}
+
+.btn-remove:hover {
+    color: #c82333;
+}
+
+/* Cart Summary Styles */
+.cart-summary {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-summary h4 {
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.summary-item.total {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1em;
+}
+
+/* Cart Count Badge */
+.cart-count {
+    position: relative;
+    top: -8px;
+    right: 5px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7em;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .cart-item .row {
+        text-align: center;
+    }
+    
+    .cart-item .col-md-2,
+    .cart-item .col-md-4 {
+        margin-bottom: 15px;
+    }
+    
+    .quantity {
+        justify-content: center;
+        max-width: 120px;
+        margin: 0 auto;
+    }
+    
+    .cart-summary {
+        margin-top: 30px;
+    }
+}

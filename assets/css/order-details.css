@@ -1,0 +1,172 @@
+/* Order Details Section Styles */
+.order-details-section {
+    padding: 100px 0 60px;
+}
+
+.section-title {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Order Information Card Styles */
+.order-info-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.info-item h6 {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.info-item p {
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Order Items Card Styles */
+.order-items-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-items-card h4 {
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+.order-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item img {
+    border-radius: 8px;
+}
+
+.order-item h5 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.quantity {
+    color: #666;
+    margin: 0;
+}
+
+.price {
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+/* Delivery Information Card Styles */
+.delivery-info-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delivery-info-card h4 {
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+.delivery-address h6 {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.delivery-address p {
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Timeline Styles */
+.delivery-timeline h6 {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item i {
+    color: #28a745;
+    font-size: 1.2em;
+    margin-right: 15px;
+    margin-top: 3px;
+}
+
+.timeline-item h6 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.timeline-item p {
+    color: #666;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.timeline-item.completed i {
+    color: #28a745;
+}
+
+.timeline-item.pending i {
+    color: #ffc107;
+}
+
+/* Badge Styles */
+.badge {
+    padding: 8px 12px;
+    font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .order-details-section {
+        padding: 80px 0 40px;
+    }
+    
+    .info-item {
+        margin-bottom: 15px;
+    }
+    
+    .order-item .row {
+        text-align: center;
+    }
+    
+    .order-item .col-md-2,
+    .order-item .col-md-6 {
+        margin-bottom: 15px;
+    }
+    
+    .delivery-info-card {
+        margin-top: 30px;
+    }
+}
