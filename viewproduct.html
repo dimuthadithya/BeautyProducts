@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Quartz Facial Serum | GlamourGlow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e63946; /* Vibrant red */
+            --secondary: #457b9d; /* Deep blue */
+            --accent: #a8dadc; /* Light blue */
+            --dark: #1d3557; /* Navy blue */
+            --light: #f1faee; /* Soft off-white */
+            --text: #2b2d42; /* Dark gray-blue */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: var(--dark);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .product-header {
+            background-color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb li {
+            margin-right: 1rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 1rem;
+            color: var(--secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary);
+        }
+        
+        .product-container {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+        
+        .product-gallery {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .thumbnail:hover, .thumbnail.active {
+            border-color: var(--primary);
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details {
+            flex: 1;
+            padding: 1rem;
+        }
+        
+        .product-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .product-brand {
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stars {
+            color: #fbbf24;
+            margin-right: 0.5rem;
+        }
+        
+        .review-count {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+        }
+        
+        .discount-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+        
+        .product-description {
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+        
+        .product-highlights {
+            margin-bottom: 2rem;
+        }
+        
+        .product-highlights ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+        
+        .product-highlights li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .product-highlights li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--primary);
+        }
+        
+        .product-actions {
+            margin-bottom: 2rem;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quantity-label {
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+        
+        .quantity-control {
+            display: flex;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .quantity-btn {
+            background-color: var(--light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            font-weight: 600;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .wishlist-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid #e2e8f0;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .product-meta {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--dark);
+        }
+        
+        .product-tabs {
+            margin-top: 3rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .tab-nav {
+            display: flex;
+            list-style: none;
+        }
+        
+        .tab-nav li {
+            margin-right: 2rem;
+        }
+        
+        .tab-nav a {
+            display: block;
+            padding: 1rem 0;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-nav a:hover, .tab-nav a.active {
+            color: var(--primary);
+        }
+        
+        .tab-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            padding: 2rem 0;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .reviews-container {
+            max-width: 800px;
+        }
+        
+        .review {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.5rem 0;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-author {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .review-date {
+            color: var(--secondary);
+            font-size: 0.8rem;
+        }
+        
+        .review-rating {
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+        
+        .related-products {
+            margin-top: 5rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.1);
+        }
+        
+        .product-card-img {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .product-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-card-img img {
+            transform: scale(1.05);
+        }
+        
+        .product-card-info {
+            padding: 1.5rem;
+        }
+        
+        .product-card-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .product-card-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #334155;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 992px) {
+            .product-container {
+                flex-direction: column;
+            }
+            
+            .product-gallery {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-image {
+                height: 350px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn, .btn-outline {
+                width: 100%;
+            }
+            
+            .wishlist-btn {
+                width: 100%;
+                height: auto;
+                padding: 0.8rem;
+            }
+            
+            .tab-nav {
+                flex-wrap: wrap;
+            }
+            
+            .tab-nav li {
+                margin-right: 1rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>GlamourGlow</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">2</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="product-header">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Skincare</a></li>
+                <li><a href="#">Serums</a></li>
+                <li><span>Rose Quartz Facial Serum</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="product-container">
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80" alt="Rose Quartz Facial Serum">
+                </div>
+                <div class="thumbnail-grid">
+                    <div class="thumbnail active">
+                        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80" alt="Rose Quartz Facial Serum">
+                    </div>
+                    <div class="thumbnail">
+                        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" alt="Rose Quartz Facial Serum">
+                    </div>
+                    <div class="thumbnail">
+                        <img src="https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Rose Quartz Facial Serum">
+                    </div>
+                    <div class="thumbnail">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Rose Quartz Facial Serum">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-details">
+                <h1 class="product-title">Rose Quartz Facial Serum</h1>
+                <span class="product-brand">by GlamourGlow</span>
+                
+                <div class="product-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="review-count">(128 reviews)</span>
+                </div>
+                
+                <div class="product-price">
+                    <span class="old-price">$49.99</span>
+                    $34.99
+                    <span class="discount-badge">30% OFF</span>
+                </div>
+                
+                <div class="product-description">
+                    <p>Our luxurious Rose Quartz Facial Serum is formulated with natural rose quartz extract, hyaluronic acid, and vitamin E to deeply hydrate and rejuvenate your skin. Perfect for all skin types, this serum reduces fine lines and leaves your skin glowing.</p>
+                </div>
+                
+                <div class="product-highlights">
+                    <h3>Key Benefits:</h3>
+                    <ul>
+                        <li>Deeply hydrates and plumps skin</li>
+                        <li>Reduces appearance of fine lines</li>
+                        <li>Improves skin elasticity</li>
+                        <li>Non-greasy, fast-absorbing formula</li>
+                        <li>Vegan and cruelty-free</li>
+                    </ul>
+                </div>
+                
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <span class="quantity-label">Quantity:</span>
+                        <div class="quantity-control">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn">Add to Cart</button>
+                        <button class="btn btn-outline">Buy Now</button>
+                        <button class="wishlist-btn" title="Add to Wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">SKU:</span>
+                        <span>GL-SERUM-001</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Category:</span>
+                        <span>Skincare, Serums</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Availability:</span>
+                        <span style="color: #10b981;">In Stock (25 items)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-tabs">
+            <ul class="tab-nav">
+                <li><a href="#description" class="active">Description</a></li>
+                <li><a href="#ingredients">Ingredients</a></li>
+                <li><a href="#how-to-use">How To Use</a></li>
+                <li><a href="#reviews">Reviews (128)</a></li>
+            </ul>
+            
+            <div id="description" class="tab-content active">
+                <h3>Product Description</h3>
+                <p>Our Rose Quartz Facial Serum is a luxurious treatment that combines the power of natural rose quartz extract with advanced skincare technology. This serum is specially formulated to:</p>
+                <ul>
+                    <li>Provide intense hydration for up to 72 hours</li>
+                    <li>Reduce the appearance of fine lines and wrinkles</li>
+                    <li>Improve skin elasticity and firmness</li>
+                    <li>Even out skin tone and texture</li>
+                    <li>Protect against environmental stressors</li>
+                </ul>
+                <p>The lightweight formula absorbs quickly without leaving a greasy residue, making it perfect for both morning and evening use. Suitable for all skin types, including sensitive skin.</p>
+            </div>
+            
+            <div id="ingredients" class="tab-content">
+                <h3>Ingredients</h3>
+                <p>Aqua (Water), Aloe Barbadensis Leaf Juice, Glycerin, Rose Quartz Extract, Sodium Hyaluronate, Niacinamide, Tocopheryl Acetate (Vitamin E), Panthenol, Allantoin, Xanthan Gum, Phenoxyethanol, Ethylhexylglycerin, Parfum (Natural Fragrance).</p>
+                <p><strong>Free from:</strong> Parabens, Sulfates, Phthalates, Mineral Oil, Synthetic Dyes.</p>
+            </div>
+            
+            <div id="how-to-use" class="tab-content">
+                <h3>How To Use</h3>
+                <ol>
+                    <li>Cleanse your face thoroughly and pat dry</li>
+                    <li>Apply a small amount (2-3 drops) of serum to your fingertips</li>
+                    <li>Gently massage onto face and neck using upward motions</li>
+                    <li>Allow serum to absorb for 1-2 minutes before applying moisturizer</li>
+                    <li>Use morning and evening for best results</li>
+                </ol>
+            </div>
+            
+            <div id="reviews" class="tab-content">
+                <div class="reviews-container">
+                    <h3>Customer Reviews</h3>
+                    
+                    <div class="review">
+                        <div class="review-header">
+                            <span class="review-author">Sarah Johnson</span>
+                            <span class="review-date">June 15, 2023</span>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>This serum has completely transformed my skincare routine! My skin feels so hydrated and looks brighter after just two weeks of use. The rose scent is subtle and pleasant.</p>
+                    </div>
+                    
+                    <div class="review">
+                        <div class="review-header">
+                            <span class="review-author">Michael Chen</span>
+                            <span class="review-date">May 28, 2023</span>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>Great product overall. My skin absorbs it quickly and it doesn't leave any residue. I wish the bottle was a bit bigger for the price, but the quality is excellent.</p>
+                    </div>
+                    
+                    <button class="btn btn-outline" style="margin-top: 2rem;">Write a Review</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="related-products">
+            <h2 class="section-title">You May Also Like</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Hydrating Face Cream">
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-title">Hydrating Face Cream</h3>
+                        <div class="product-card-price">$28.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Volumizing Mascara">
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-title">Volumizing Mascara</h3>
+                        <div class="product-card-price">$22.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" alt="Matte Lipstick Set">
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-title">Matte Lipstick Set</h3>
+                        <div class="product-card-price">$39.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="https://images.unsplash.com/photo-1619451334790-5d1a194e5d01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Eau de Parfum">
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-title">Eau de Parfum</h3>
+                        <div class="product-card-price">$59.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GlamourGlow</h3>
+                    <p>Your destination for premium, natural beauty products that enhance your natural glow.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Skincare</a></li>
+                        <li><a href="#">Makeup</a></li>
+                        <li><a href="#">Hair Care</a></li>
+                        <li><a href="#">Body Care</a></li>
+                        <li><a href="#">Fragrance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Ingredients</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 GlamourGlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Thumbnail image switcher
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.querySelector('.main-image img');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Remove active class from all thumbnails
+                thumbnails.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked thumbnail
+                this.classList.add('active');
+                
+                // Change main image
+                const newSrc = this.querySelector('img').src;
+                mainImage.src = newSrc;
+            });
+        });
+        
+        // Tab switching functionality
+        const tabLinks = document.querySelectorAll('.tab-nav a');
+        
+        tabLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs and content
+                tabLinks.forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const tabId = this.getAttribute('href');
+                document.querySelector(tabId).classList.add('active');
+            });
+        });
+        
+        // Quantity selector functionality
+        const minusBtn = document.querySelector('.quantity-btn:first-child');
+        const plusBtn = document.querySelector('.quantity-btn:last-child');
+        const quantityInput = document.querySelector('.quantity-input');
+        
+        minusBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+        
+        plusBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+        });
+        
+        // Wishlist button toggle
+        const wishlistBtn = document.querySelector('.wishlist-btn');
+        wishlistBtn.addEventListener('click', function() {
+            this.querySelector('i').classList.toggle('far');
+            this.querySelector('i').classList.toggle('fas');
+        });
+    </script>
+</body>
+</html>

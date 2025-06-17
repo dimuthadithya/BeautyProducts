@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | Glow & Bloom Beauty</title>
+    <style>
+      :root {
+        --primary: #e63946; /* Vibrant red */
+        --secondary: #457b9d; /* Deep blue */
+        --accent: #a8dadc; /* Light blue */
+        --dark: #1d3557; /* Navy blue */
+        --light: #f1faee; /* Soft off-white */
+        --text: #2b2d42; /* Dark gray-blue */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--dark), var(--secondary));
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .tagline {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .about-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: center;
+      }
+
+      .about-text {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .about-image {
+        flex: 1;
+        min-width: 300px;
+        height: 400px;
+        background-color: var(--accent);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .about-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      h2 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-size: 2rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary);
+      }
+
+      .mission-values {
+        background-color: white;
+        padding: 60px 0;
+        margin: 60px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .value-card {
+        background-color: var(--light);
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        border-top: 4px solid var(--primary);
+      }
+
+      .value-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .value-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+
+      .value-card h3 {
+        color: var(--dark);
+        margin-bottom: 15px;
+      }
+
+      .team-section {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .team-member {
+        background-color: white;
+        padding: 30px 20px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .team-member img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 3px solid var(--accent);
+      }
+
+      .team-member h3 {
+        color: var(--dark);
+        margin-bottom: 5px;
+      }
+
+      .team-member p {
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+        border-radius: 10px;
+        margin-bottom: 60px;
+      }
+
+      .cta-section h2 {
+        color: white;
+      }
+
+      .cta-section h2::after {
+        background-color: white;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: white;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 50px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: var(--dark);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      footer {
+        background-color: var(--dark);
+        color: white;
+        text-align: center;
+        padding: 30px 0;
+        margin-top: 60px;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .about-section {
+          flex-direction: column;
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>About Glow & Bloom</h1>
+        <p class="tagline">
+          Where beauty meets authenticity and science embraces nature
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="about-section">
+        <div class="about-text">
+          <h2>Our Story</h2>
+          <p>
+            Founded in 2018, Glow & Bloom began as a small passion project
+            between two cosmetic chemists who believed beauty products could be
+            both effective and ethically made. What started as handmade batches
+            in a home kitchen has blossomed into a trusted brand available in
+            over 500 stores nationwide.
+          </p>
+          <p>
+            We've stayed true to our roots - every product is still developed
+            with the same care and attention to detail as those first small
+            batches. Our team has grown to include dermatologists, botanists,
+            and sustainability experts who help us create formulas that deliver
+            visible results while respecting your skin and our planet.
+          </p>
+          <p>
+            At Glow & Bloom, we're not just selling beauty products - we're
+            cultivating confidence and self-care rituals that make you feel as
+            beautiful on the inside as you look on the outside.
+          </p>
+        </div>
+        <div class="about-image">
+          <!-- Replace with your actual image -->
+          <img
+            src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+            alt="Our beauty products"
+          />
+        </div>
+      </section>
+
+      <section class="mission-values">
+        <div class="container">
+          <h2>Our Mission & Values</h2>
+          <p>
+            We're committed to creating clean, high-performance beauty products
+            that are as good for your skin as they are for the environment. Our
+            core values guide everything we do:
+          </p>
+
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-leaf"></i>
+              </div>
+              <h3>Clean Formulas</h3>
+              <p>
+                We ban over 1,500 questionable ingredients, far exceeding
+                industry standards. If we wouldn't put it on our skin, we won't
+                put it in our products.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-flask"></i>
+              </div>
+              <h3>Science-Backed</h3>
+              <p>
+                Our products are developed by cosmetic chemists and
+                dermatologists to deliver real, measurable results you can see
+                and feel.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-globe-americas"></i>
+              </div>
+              <h3>Sustainability</h3>
+              <p>
+                From responsibly sourced ingredients to eco-friendly packaging,
+                we're constantly innovating to reduce our environmental impact.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-heart"></i>
+              </div>
+              <h3>Inclusivity</h3>
+              <p>
+                Beauty comes in all colors, ages, and genders. Our products are
+                designed for every skin type and tone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="team-section">
+        <h2>Meet Our Founders</h2>
+        <p>The brilliant minds behind Glow & Bloom's success</p>
+
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="Dr. Sarah Chen"
+            />
+            <h3>Dr. Sarah Chen</h3>
+            <p>Chief Cosmetic Chemist</p>
+            <p>
+              With a PhD in Cosmetic Science and 15 years in the beauty
+              industry, Sarah formulates products that actually work.
+            </p>
+          </div>
+
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="Elena Rodriguez"
+            />
+            <h3>Elena Rodriguez</h3>
+            <p>CEO & Sustainability Director</p>
+            <p>
+              Former environmental scientist turned beauty entrepreneur, Elena
+              ensures our business practices match our values.
+            </p>
+          </div>
+
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="Dr. Michael Johnson"
+            />
+            <h3>Dr. Michael Johnson</h3>
+            <p>Clinical Dermatologist</p>
+            <p>
+              Our medical expert who ensures all products meet the highest
+              standards for skin health and safety.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <h2>Ready to Experience Glow & Bloom?</h2>
+        <p>
+          Join thousands of customers who've transformed their skincare routines
+          with our products.
+        </p>
+        <a href="#" class="btn">Shop Our Collection</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Glow & Bloom Beauty. All rights reserved.</p>
+        <p>Clean Beauty. Conscious Choices. Visible Results.</p>
+      </div>
+    </footer>
+  </body>
+</html>

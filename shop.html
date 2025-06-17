@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | GlamourGlow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e63946; /* Vibrant red */
+            --secondary: #457b9d; /* Deep blue */
+            --accent: #a8dadc; /* Light blue */
+            --dark: #1d3557; /* Navy blue */
+            --light: #f1faee; /* Soft off-white */
+            --text: #2b2d42; /* Dark gray-blue */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: var(--dark);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .shop-header {
+            background: linear-gradient(rgba(29, 53, 87, 0.8), rgba(29, 53, 87, 0.8)), url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .shop-header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 1rem;
+            color: var(--accent);
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        
+        .shop-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .sidebar-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-title i {
+            color: var(--primary);
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .category-list a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .category-list a:hover {
+            color: var(--primary);
+        }
+        
+        .category-count {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .price-filter input {
+            width: 100%;
+            margin: 1rem 0;
+            accent-color: var(--primary);
+        }
+        
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .rating-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .rating-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .rating-option input {
+            margin-right: 0.8rem;
+            accent-color: var(--primary);
+        }
+        
+        .rating-stars {
+            color: #fbbf24;
+            margin-right: 0.5rem;
+        }
+        
+        .products-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(230, 57, 70, 0.2);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-category {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+        
+        .product-rating {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+        
+        .page-numbers {
+            display: flex;
+            list-style: none;
+        }
+        
+        .page-numbers li {
+            margin: 0 0.3rem;
+        }
+        
+        .page-numbers a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .page-numbers a:hover, .page-numbers a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #334155;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 992px) {
+            .shop-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .shop-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-spa"></i>
+                    <span>GlamourGlow</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html" class="active">Shop</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <a href="#" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">3</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="shop-header">
+        <div class="container shop-header-content">
+            <h1>Our Products</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="shop-container">
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Categories <i class="fas fa-chevron-down"></i></h3>
+                    <ul class="category-list">
+                        <li><a href="#">Skincare <span class="category-count">(42)</span></a></li>
+                        <li><a href="#">Makeup <span class="category-count">(36)</span></a></li>
+                        <li><a href="#">Hair Care <span class="category-count">(28)</span></a></li>
+                        <li><a href="#">Body Care <span class="category-count">(19)</span></a></li>
+                        <li><a href="#">Fragrance <span class="category-count">(15)</span></a></li>
+                        <li><a href="#">Men's Care <span class="category-count">(12)</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Price Range <i class="fas fa-chevron-down"></i></h3>
+                    <input type="range" min="0" max="200" value="100" class="price-slider">
+                    <div class="price-range">
+                        <span>$0</span>
+                        <span>$200</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Rating <i class="fas fa-chevron-down"></i></h3>
+                    <div class="rating-filter">
+                        <label class="rating-option">
+                            <input type="checkbox" checked>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </span>
+                            <span>(128)</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="checkbox" checked>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </span>
+                            <span>(256)</span>
+                        </label>
+                        <label class="rating-option">
+                            <input type="checkbox" checked>
+                            <span class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </span>
+                            <span>(312)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Availability <i class="fas fa-chevron-down"></i></h3>
+                    <div class="availability-filter">
+                        <label class="availability-option">
+                            <input type="checkbox" checked>
+                            <span>In Stock (72)</span>
+                        </label>
+                        <label class="availability-option">
+                            <input type="checkbox">
+                            <span>Out of Stock (12)</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+            
+            <main class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <span class="product-badge">Sale</span>
+                        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80" alt="Rose Quartz Facial Serum">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Skincare</span>
+                        <h3 class="product-title">Rose Quartz Facial Serum</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(128)</span>
+                        </div>
+                        <div class="product-price">$34.99 <span class="old-price">$49.99</span></div>
+                        <div class="product-actions">
+                            <a href="#" class="btn">Add to Cart</a>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Hydrating Face Cream">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Skincare</span>
+                        <h3 class="product-title">Hydrating Face Cream</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(256)</span>
+                        </div>
+                        <div class="product-price">$28.99</div>
+                        <div class="product-actions">
+                            <a href="#" class="btn">Add to Cart</a>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <span class="product-badge">New</span>
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Volumizing Mascara">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Makeup</span>
+                        <h3 class="product-title">Volumizing Mascara</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(312)</span>
+                        </div>
+                        <div class="product-price">$22.99</div>
+                        <div class="product-actions">
+                            <a href="#" class="btn">Add to Cart</a>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" alt="Lipstick Set">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Makeup</span>
+                        <h3 class="product-title">Matte Lipstick Set</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(198)</span>
+                        </div>
+                        <div class="product-price">$39.99 <span class="old-price">$49.99</span></div>
+                        <div class="product-actions">
+                            <a href="#" class="btn">Add to Cart</a>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <span class="product-badge">Bestseller</span>
+                        <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Shampoo and Conditioner">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Hair Care</span>
+                        <h3 class="product-title">Hydrating Shampoo & Conditioner</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(276)</span>
+                        </div>
+                        <div class="product-price">$32.99</div>
+                        <div class="product-actions">
+                            <a href="#" class="btn">Add to Cart</a>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1619451334790-5d1a194e5d01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Perfume Bottle">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Fragrance</span>
+                        <h3 class="product-title">Eau de Parfum</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(154)</span>
+                        </div>
+                        <div class="product-price">$59.99</div>
+                        <div class="product-actions">
+                            <a href="#" class="btn">Add to Cart</a>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <div class="pagination">
+            <ul class="page-numbers">
+                <li><a href="#"><i class="fas fa-chevron-left"></i></a></li>
+                <li><a href="#" class="active">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GlamourGlow</h3>
+                    <p>Your destination for premium, natural beauty products that enhance your natural glow.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Skincare</a></li>
+                        <li><a href="#">Makeup</a></li>
+                        <li><a href="#">Hair Care</a></li>
+                        <li><a href="#">Body Care</a></li>
+                        <li><a href="#">Fragrance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Ingredients</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 GlamourGlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
