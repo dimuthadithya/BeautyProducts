@@ -89,6 +89,23 @@
     transform: translateY(-1px);
 }
 
+/* Back to Home Button */
+.btn-outline-secondary {
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-outline-secondary i {
+    margin-right: 8px;
+}
+
 /* Social Auth */
 .auth-divider {
     text-align: center;

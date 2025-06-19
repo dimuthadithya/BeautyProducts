@@ -143,14 +143,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <button type="submit" class="btn btn-primary w-100">
                 Create Account
               </button>
-              <div class="auth-divider">
-                <span>or sign up with</span>
-              </div>
-              <p class="text-center mt-4">
-                Already have an account?
-                <a href="login.html">Sign in</a>
-              </p>
             </form>
+            <div class="mt-3 text-center">
+              <a href="index.php" class="btn btn-outline-secondary"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+            <div class="auth-footer">
+              <p>Already have an account? <a href="login.php">Sign In</a></p>
+            </div>
           </div>
         </div>
       </div>
