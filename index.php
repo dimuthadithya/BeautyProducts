@@ -15,7 +15,7 @@ include 'components/header.php';
           beauty. Shop our curated collection of skincare, makeup, and
           beauty essentials.
         </p>
-        <a href="shop.html" class="btn btn-lg btn-light">Shop Now</a>
+        <a href="shop.php" class="btn btn-lg btn-light">Shop Now</a>
       </div>
     </div>
   </div>
