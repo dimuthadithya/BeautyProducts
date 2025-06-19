@@ -82,10 +82,11 @@ include 'components/header.php';
             <div class="col-md-6 mb-4" data-aos="fade-right">
                 <div class="contact-form">
                     <h3 class="mb-4">Send us a Message</h3>
-                    <form>
+                    <form id="contactForm" novalidate>
                         <div class="mb-3">
                             <label for="name" class="form-label">Your Name</label>
-                            <input type="text" class="form-control" id="name" required />
+                            <input type="text" class="form-control" id="name" name="name" required />
+                            <div class="invalid-feedback">Please enter your name.</div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
@@ -93,7 +94,9 @@ include 'components/header.php';
                                 type="email"
                                 class="form-control"
                                 id="email"
+                                name="email"
                                 required />
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
                         </div>
                         <div class="mb-3">
                             <label for="subject" class="form-label">Subject</label>
@@ -101,18 +104,34 @@ include 'components/header.php';
                                 type="text"
                                 class="form-control"
                                 id="subject"
+                                name="subject"
                                 required />
+                            <div class="invalid-feedback">Please enter a subject.</div>
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
                             <textarea
                                 class="form-control"
                                 id="message"
+                                name="message"
                                 rows="5"
                                 required></textarea>
+                            <div class="invalid-feedback">Please enter your message.</div>
                         </div>
-                        <button type="submit" class="btn btn-dark">Send Message</button>
+                        <button type="submit" class="btn btn-dark w-100">
+                            <span class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                            Send Message
+                        </button>
                     </form>
+                    <!-- Toast for notifications -->
+                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                        <div id="messageToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body"></div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6" data-aos="fade-left">
@@ -207,6 +226,82 @@ include 'components/header.php';
 </section>
 
 <?php include 'components/footer.php'; ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contactForm');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const spinner = submitBtn.querySelector('.spinner-border');
+        const toast = new bootstrap.Toast(document.getElementById('messageToast'));
+        const toastElement = document.getElementById('messageToast');
+        const toastBody = toastElement.querySelector('.toast-body');
+
+        function showLoading(show) {
+            submitBtn.disabled = show;
+            spinner.classList.toggle('d-none', !show);
+            submitBtn.textContent = show ? ' Sending...' : 'Send Message';
+            if (show) {
+                spinner.classList.remove('d-none');
+                submitBtn.prepend(spinner);
+            }
+        }
+
+        function showToast(message, success) {
+            toastElement.className = `toast align-items-center text-white border-0 bg-${success ? 'success' : 'danger'}`;
+            toastBody.textContent = message;
+            toast.show();
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Remove any existing validation classes
+            form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+
+            // Check if form is valid
+            if (!form.checkValidity()) {
+                e.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('process-contact.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast(data.message, true);
+                    form.reset();
+                    form.classList.remove('was-validated');
+                } else {
+                    showToast(data.message || 'An error occurred. Please try again.', false);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('An error occurred. Please try again later.', false);
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // Reset validation on input
+        form.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('is-invalid');
+                if (form.classList.contains('was-validated')) {
+                    form.classList.remove('was-validated');
+                }
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
