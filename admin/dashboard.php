@@ -9,23 +9,23 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 // Fetch Total Orders
-$orders_query = "SELECT COUNT(*) as total_orders, SUM(total_amount) as total_revenue FROM orders";
+$orders_query = "SELECT COUNT(*) as total_orders, COALESCE(SUM(total_amount), 0) as total_revenue FROM orders";
 $orders_result = mysqli_query($conn, $orders_query);
 $orders_data = mysqli_fetch_assoc($orders_result);
-$total_orders = $orders_data['total_orders'];
-$total_revenue = $orders_data['total_revenue'];
+$total_orders = $orders_data['total_orders'] ?? 0;
+$total_revenue = $orders_data['total_revenue'] ?? 0;
 
 // Fetch Total Customers
 $customers_query = "SELECT COUNT(*) as total_customers FROM users WHERE role = 'customer'";
 $customers_result = mysqli_query($conn, $customers_query);
 $customers_data = mysqli_fetch_assoc($customers_result);
-$total_customers = $customers_data['total_customers'];
+$total_customers = $customers_data['total_customers'] ?? 0;
 
 // Fetch Total Products
 $products_query = "SELECT COUNT(*) as total_products FROM products";
 $products_result = mysqli_query($conn, $products_query);
 $products_data = mysqli_fetch_assoc($products_result);
-$total_products = $products_data['total_products'];
+$total_products = $products_data['total_products'] ?? 0;
 
 // Fetch Recent Orders
 $recent_orders_query = "SELECT o.*, u.first_name, u.last_name, p.name as product_name, p.image_url 
