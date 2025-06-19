@@ -14,9 +14,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <button class="menu-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <h1 class="h3 mb-0 ms-3"><?php echo $pageTitle; ?></h1>
             </div>
             <div class="admin-profile">
