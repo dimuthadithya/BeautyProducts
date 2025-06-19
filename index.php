@@ -49,42 +49,33 @@ include 'components/header.php';
   <div class="container">
     <h2 class="text-center mb-5" data-aos="fade-up">Shop by Category</h2>
     <div class="row">
-      <!-- Category 1 -->
-      <div class="col-md-4 mb-4" data-aos="fade-up">
-        <div class="category-card">
-          <img
-            src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"
-            alt="Skincare"
-            class="category-img" />
-          <div class="category-overlay">
-            <span>Skincare</span>
-          </div>
+      <?php
+      // Get all categories
+      $query = "SELECT * FROM categories ORDER BY name";
+      $result = mysqli_query($conn, $query);
+
+      $delay = 0;
+      while ($category = mysqli_fetch_assoc($result)) {
+        // Convert category name to lowercase and remove spaces for image filename
+        $image_filename = strtolower(str_replace(' ', '', $category['name'])) . '.jpg';
+      ?>
+        <div class="col-md-4 mb-4" data-aos="fade-up" <?php echo $delay ? "data-aos-delay=\"$delay\"" : ''; ?>>
+          <a href="shop.php?category=<?php echo $category['category_id']; ?>" class="text-decoration-none">
+            <div class="category-card">
+              <img
+                src="assets/images/categories/<?php echo $image_filename; ?>"
+                alt="<?php echo htmlspecialchars($category['name']); ?>"
+                class="category-img" />
+              <div class="category-overlay">
+                <span><?php echo htmlspecialchars($category['name']); ?></span>
+              </div>
+            </div>
+          </a>
         </div>
-      </div>
-      <!-- Category 2 -->
-      <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-        <div class="category-card">
-          <img
-            src="https://images.unsplash.com/photo-1571875257727-256c39da42af"
-            alt="Makeup"
-            class="category-img" />
-          <div class="category-overlay">
-            <span>Makeup</span>
-          </div>
-        </div>
-      </div>
-      <!-- Category 3 -->
-      <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-        <div class="category-card">
-          <img
-            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e"
-            alt="Hair Care"
-            class="category-img" />
-          <div class="category-overlay">
-            <span>Hair Care</span>
-          </div>
-        </div>
-      </div>
+      <?php
+        $delay += 100;
+      }
+      ?>
     </div>
   </div>
 </section><?php include 'components/footer.php'; ?>
