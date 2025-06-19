@@ -1,6 +1,7 @@
 <?php
 $pageTitle = "Your Beauty Destination";
 $additionalCss = ["assets/css/home.css"];
+require_once 'config/db_conn.php';
 include 'components/header.php';
 ?><?php include 'components/nav.php'; ?>
 
