@@ -149,160 +149,160 @@ if (isset($_POST['update_product'])) {
 
     <!-- Main Content -->
     <div class="main-content">
-      <?php
-      $pageTitle = "Product Management";
-      include('include/header.php');
-      ?>
+      <div class="container-fluid">
+        <!-- Add Product Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2>Products</h2>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            <i class="fas fa-plus"></i> Add New Product
+          </button>
+        </div>
 
-      <!-- Content Area -->
-      <div class="content">
-        <div class="container-fluid">
-          <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert alert-<?php echo $_SESSION['msg_type']; ?> alert-dismissible fade show" role="alert">
-              <?php
-              echo $_SESSION['message'];
-              unset($_SESSION['message']);
-              unset($_SESSION['msg_type']);
-              ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          <?php endif; ?>
-
-          <!-- Products Table -->
-          <div class="card">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Product</th>
-                      <th>Category</th>
-                      <th>Price</th>
-                      <th>Stock</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $query = "SELECT p.*, c.name as category_name 
-                                        FROM products p 
-                                        LEFT JOIN categories c ON p.category_id = c.category_id 
-                                        ORDER BY p.product_id DESC";
-                    $result = mysqli_query($conn, $query);
-                    while ($row = mysqli_fetch_assoc($result)):
-                      $stock_status = $row['stock_quantity'] > 0 ?
-                        '<span class="badge bg-success">In Stock</span>' :
-                        '<span class="badge bg-danger">Out of Stock</span>';
-                    ?>
-                      <tr>
-                        <td><?php echo $row['product_id']; ?></td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <img
-                              src="<?php echo !empty($row['image_url']) ? '../' . $row['image_url'] : 'https://via.placeholder.com/50'; ?>"
-                              alt="<?php echo htmlspecialchars($row['name']); ?>"
-                              class="me-2"
-                              style="width: 50px; height: 50px; object-fit: cover;" />
-                            <div>
-                              <div class="fw-bold"><?php echo htmlspecialchars($row['name']); ?></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td><?php echo htmlspecialchars($row['category_name']); ?></td>
-                        <td>LKR <?php echo number_format($row['price'], 2); ?></td>
-                        <td><?php echo htmlspecialchars($row['stock_quantity']); ?></td>
-                        <td><?php echo $stock_status; ?></td>
-                        <td>
-                          <button
-                            class="btn btn-sm btn-primary me-1 edit-product"
-                            data-bs-toggle="modal"
-                            data-bs-target="#editProductModal"
-                            data-id="<?php echo $row['product_id']; ?>"
-                            data-name="<?php echo htmlspecialchars($row['name']); ?>"
-                            data-category="<?php echo $row['category_id']; ?>"
-                            data-description="<?php echo htmlspecialchars($row['description']); ?>"
-                            data-price="<?php echo $row['price']; ?>"
-                            data-stock="<?php echo $row['stock_quantity']; ?>"
-                            data-image="<?php echo $row['image_url']; ?>">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button
-                            class="btn btn-sm btn-danger delete-product"
-                            data-bs-toggle="modal"
-                            data-bs-target="#deleteProductModal"
-                            data-id="<?php echo $row['product_id']; ?>"
-                            data-name="<?php echo htmlspecialchars($row['name']); ?>">
-                            <i class="fas fa-trash"></i>
-                          </button>
-
-                        </td>
-                      </tr>
-                      <!-- More product rows... -->
-                    <?php endwhile; ?>
-                  </tbody>
-                </table>
+        <!-- Add Product Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
+              <form action="products.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="category_id" class="form-label">Category</label>
+                    <select class="form-select" id="category_id" name="category_id" required>
+                      <?php
+                      $categories = mysqli_query($conn, "SELECT * FROM categories ORDER BY name");
+                      while ($category = mysqli_fetch_assoc($categories)) {
+                        echo "<option value='" . $category['category_id'] . "'>" . $category['name'] . "</option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="stock_quantity" class="form-label">Stock Quantity</label>
+                    <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="image" class="form-label">Product Image</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" name="add_product" class="btn btn-primary">Add Product</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Add Product Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add New Product</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Existing content continues... -->
+        <!-- Content Area -->
+        <div class="content">
+          <div class="container-fluid">
+            <?php if (isset($_SESSION['message'])): ?>
+              <div class="alert alert-<?php echo $_SESSION['msg_type']; ?> alert-dismissible fade show" role="alert">
+                <?php
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                unset($_SESSION['msg_type']);
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php endif; ?>
+
+            <!-- Products Table -->
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $query = "SELECT p.*, c.name as category_name 
+                                          FROM products p 
+                                          LEFT JOIN categories c ON p.category_id = c.category_id 
+                                          ORDER BY p.product_id DESC";
+                      $result = mysqli_query($conn, $query);
+                      while ($row = mysqli_fetch_assoc($result)):
+                        $stock_status = $row['stock_quantity'] > 0 ?
+                          '<span class="badge bg-success">In Stock</span>' :
+                          '<span class="badge bg-danger">Out of Stock</span>';
+                      ?>
+                        <tr>
+                          <td><?php echo $row['product_id']; ?></td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <img
+                                src="<?php echo !empty($row['image_url']) ? '../' . $row['image_url'] : 'https://via.placeholder.com/50'; ?>"
+                                alt="<?php echo htmlspecialchars($row['name']); ?>"
+                                class="me-2"
+                                style="width: 50px; height: 50px; object-fit: cover;" />
+                              <div>
+                                <div class="fw-bold"><?php echo htmlspecialchars($row['name']); ?></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td><?php echo htmlspecialchars($row['category_name']); ?></td>
+                          <td>LKR <?php echo number_format($row['price'], 2); ?></td>
+                          <td><?php echo htmlspecialchars($row['stock_quantity']); ?></td>
+                          <td><?php echo $stock_status; ?></td>
+                          <td>
+                            <button
+                              class="btn btn-sm btn-primary me-1 edit-product"
+                              data-bs-toggle="modal"
+                              data-bs-target="#editProductModal"
+                              data-id="<?php echo $row['product_id']; ?>"
+                              data-name="<?php echo htmlspecialchars($row['name']); ?>"
+                              data-category="<?php echo $row['category_id']; ?>"
+                              data-description="<?php echo htmlspecialchars($row['description']); ?>"
+                              data-price="<?php echo $row['price']; ?>"
+                              data-stock="<?php echo $row['stock_quantity']; ?>"
+                              data-image="<?php echo $row['image_url']; ?>">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button
+                              class="btn btn-sm btn-danger delete-product"
+                              data-bs-toggle="modal"
+                              data-bs-target="#deleteProductModal"
+                              data-id="<?php echo $row['product_id']; ?>"
+                              data-name="<?php echo htmlspecialchars($row['name']); ?>">
+                              <i class="fas fa-trash"></i>
+                            </button>
+
+                          </td>
+                        </tr>
+                        <!-- More product rows... -->
+                      <?php endwhile; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
-          <form action="" method="POST" enctype="multipart/form-data">
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="add_name" class="form-label">Product Name</label>
-                <input type="text" class="form-control" id="add_name" name="name" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="add_category" class="form-label">Category</label>
-                <select class="form-control" id="add_category" name="category_id" required>
-                  <option value="">Select Category</option>
-                  <?php
-                  $categories = mysqli_query($conn, "SELECT * FROM categories ORDER BY name");
-                  while ($cat = mysqli_fetch_assoc($categories)) {
-                    echo "<option value='" . $cat['category_id'] . "'>" . htmlspecialchars($cat['name']) . "</option>";
-                  }
-                  ?>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label for="add_description" class="form-label">Description</label>
-                <textarea class="form-control" id="add_description" name="description" rows="3"></textarea>
-              </div>
-
-              <div class="mb-3">
-                <label for="add_price" class="form-label">Price</label>
-                <input type="number" class="form-control" id="add_price" name="price" step="0.01" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="add_stock" class="form-label">Stock Quantity</label>
-                <input type="number" class="form-control" id="add_stock" name="stock_quantity" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="add_image" class="form-label">Product Image</label>
-                <input type="file" class="form-control" id="add_image" name="image" accept="image/*">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" name="add_product">Add Product</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
