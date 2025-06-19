@@ -1,5 +1,23 @@
 <?php
-$pageTitle = "Product Details";
+require_once 'config/db_conn.php';
+
+// Get product ID from URL
+$product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// Fetch product details
+$query = "SELECT p.*, c.name as category_name 
+          FROM products p 
+          LEFT JOIN categories c ON p.category_id = c.category_id 
+          WHERE p.product_id = $product_id";
+$result = mysqli_query($conn, $query);
+
+if (!$result || mysqli_num_rows($result) === 0) {
+    header("Location: shop.php");
+    exit;
+}
+
+$product = mysqli_fetch_assoc($result);
+$pageTitle = $product['name'] . " - Product Details";
 $additionalCss = ["assets/css/product-details.css"];
 include 'components/header.php';
 ?>
@@ -7,45 +25,41 @@ include 'components/header.php';
 <?php include 'components/nav.php'; ?>
 
 <!-- Product Details Section -->
-<main class="product-details">
+<main class="product-details mt-5">
     <div class="product-container">
         <div class="product-images">
             <div class="main-image">
                 <img
-                    src="assets/images/product1.jpg"
-                    alt="Product Image"
+                    src="<?php echo htmlspecialchars($product['image_url']); ?>"
+                    alt="<?php echo htmlspecialchars($product['name']); ?>"
                     id="mainImage" />
-            </div>
-            <div class="thumbnail-images">
-                <img
-                    src="assets/images/product1.jpg"
-                    alt="Thumbnail 1"
-                    onclick="changeImage(this.src)" />
-                <img
-                    src="assets/images/product1-2.jpg"
-                    alt="Thumbnail 2"
-                    onclick="changeImage(this.src)" />
-                <img
-                    src="assets/images/product1-3.jpg"
-                    alt="Thumbnail 3"
-                    onclick="changeImage(this.src)" />
             </div>
         </div>
         <div class="product-info">
-            <h1 class="product-title">Premium Beauty Product</h1>
-            <div class="product-rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-                <span>(4.5/5 - 128 reviews)</span>
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                    <li class="breadcrumb-item"><a href="shop.php">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="shop.php?category=<?php echo $product['category_id']; ?>"><?php echo htmlspecialchars($product['category_name']); ?></a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($product['name']); ?></li>
+                </ol>
+            </nav>
+            <h1 class="product-title"><?php echo htmlspecialchars($product['name']); ?></h1>
+            <div class="product-category mb-3">
+                <span class="badge bg-secondary"><?php echo htmlspecialchars($product['category_name']); ?></span>
             </div>
-            <div class="product-price">
-                <span class="current-price">$49.99</span>
-                <span class="original-price">$59.99</span>
-                <span class="discount">17% OFF</span>
+            <div class="product-price mb-4">
+                <span class="current-price">LKR <?php echo number_format($product['price'], 2); ?></span>
             </div>
+            <?php if ($product['stock_quantity'] > 0): ?>
+                <div class="stock-info mb-3 text-success">
+                    <i class="fas fa-check-circle"></i> In Stock (<?php echo $product['stock_quantity']; ?> available)
+                </div>
+            <?php else: ?>
+                <div class="stock-info mb-3 text-danger">
+                    <i class="fas fa-times-circle"></i> Out of Stock
+                </div>
+            <?php endif; ?>
             <div class="product-description">
                 <h3>Description</h3>
                 <p>
@@ -54,14 +68,6 @@ include 'components/header.php';
                     lasting results. Perfect for all skin types and dermatologically
                     tested for your safety.
                 </p>
-            </div>
-            <div class="product-variant">
-                <h3>Size</h3>
-                <div class="variant-options">
-                    <button class="variant-btn active">30ml</button>
-                    <button class="variant-btn">50ml</button>
-                    <button class="variant-btn">100ml</button>
-                </div>
             </div>
             <div class="quantity-selector">
                 <h3>Quantity</h3>

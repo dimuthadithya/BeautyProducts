@@ -13,6 +13,27 @@
     padding: 0;
 }
 
+/* Breadcrumb */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.breadcrumb-item a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: #333;
+}
+
+.breadcrumb-item.active {
+    color: #333;
+}
+
 /* Product Images */
 .product-images {
     display: flex;
@@ -88,9 +109,11 @@
 }
 
 .current-price {
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 600;
     color: #333;
+    display: block;
+    margin-bottom: 1rem;
 }
 
 .original-price {
@@ -107,9 +130,27 @@
     font-size: 0.8rem;
 }
 
+.stock-info {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stock-info i {
+    margin-right: 0.5rem;
+}
+
 .product-description {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
     color: #666;
     line-height: 1.6;
+}
+
+.product-description h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
 }
 
 .product-variant h3,
