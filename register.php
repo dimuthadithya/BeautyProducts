@@ -175,14 +175,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="auth-divider">
                 <span>or sign up with</span>
               </div>
-              <div class="social-auth">
-                <button type="button" class="btn btn-outline-dark">
-                  <i class="fab fa-google"></i> Google
-                </button>
-                <button type="button" class="btn btn-outline-dark">
-                  <i class="fab fa-facebook"></i> Facebook
-                </button>
-              </div>
               <p class="text-center mt-4">
                 Already have an account?
                 <a href="login.html">Sign in</a>
