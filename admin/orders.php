@@ -179,20 +179,15 @@ $result = mysqli_query($conn, $query);
                             </span>
                           </td>
                           <td>
-                            <div class="d-flex gap-2">
-                              <select class="form-select form-select-sm status-select" style="width: auto;"
-                                data-order-id="<?php echo $row['order_id']; ?>"
-                                data-current-status="<?php echo $row['status']; ?>">
-                                <option value="pending" <?php echo $row['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
-                                <option value="processing" <?php echo $row['status'] === 'processing' ? 'selected' : ''; ?>>Processing</option>
-                                <option value="shipped" <?php echo $row['status'] === 'shipped' ? 'selected' : ''; ?>>Shipped</option>
-                                <option value="delivered" <?php echo $row['status'] === 'delivered' ? 'selected' : ''; ?>>Delivered</option>
-                                <option value="cancelled" <?php echo $row['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
-                              </select>
-                              <a href="order-details.php?id=<?php echo $row['order_id']; ?>" class="btn btn-sm btn-primary">
-                                <i class="fas fa-eye"></i> View
-                              </a>
-                            </div>
+                            <select class="form-select form-select-sm status-select" style="width: auto;"
+                              data-order-id="<?php echo $row['order_id']; ?>"
+                              data-current-status="<?php echo $row['status']; ?>">
+                              <option value="pending" <?php echo $row['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                              <option value="processing" <?php echo $row['status'] === 'processing' ? 'selected' : ''; ?>>Processing</option>
+                              <option value="shipped" <?php echo $row['status'] === 'shipped' ? 'selected' : ''; ?>>Shipped</option>
+                              <option value="delivered" <?php echo $row['status'] === 'delivered' ? 'selected' : ''; ?>>Delivered</option>
+                              <option value="cancelled" <?php echo $row['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                            </select>
                           </td>
                         </tr>
                       <?php
