@@ -33,15 +33,24 @@ session_start();
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
                     </a>
-                </li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li class="nav-item dropdown">
+                </li> <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary text-white px-3" href="admin/dashboard.php">
+                                <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <li class="nav-item dropdown ms-2">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="profile.php">My Profile</a></li>
                             <li><a class="dropdown-item" href="order-details.php">My Orders</a></li>
+                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                                <li><a class="dropdown-item" href="admin/dashboard.php">Admin Dashboard</a></li>
+                            <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
