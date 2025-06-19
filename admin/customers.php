@@ -120,7 +120,7 @@ if (isset($_GET['delete_user']) && isset($_GET['user_id'])) {
                           <?php if ($row['total_orders'] > 0): ?>
                             <div>
                               <strong><?php echo $row['total_orders']; ?></strong> orders<br>
-                              <small class="text-muted">$<?php echo number_format($row['total_spent'], 2); ?> total spent</small>
+                              <small class="text-muted">LKR <?php echo number_format($row['total_spent'], 2); ?> total spent</small>
                             </div>
                           <?php else: ?>
                             <span class="text-muted">No orders</span>

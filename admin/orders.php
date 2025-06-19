@@ -179,9 +179,20 @@ $result = mysqli_query($conn, $query);
                             </span>
                           </td>
                           <td>
-                            <a href="order-details.php?id=<?php echo $row['order_id']; ?>" class="btn btn-sm btn-primary">
-                              <i class="fas fa-eye"></i> View
-                            </a>
+                            <div class="d-flex gap-2">
+                              <select class="form-select form-select-sm status-select" style="width: auto;"
+                                data-order-id="<?php echo $row['order_id']; ?>"
+                                data-current-status="<?php echo $row['status']; ?>">
+                                <option value="pending" <?php echo $row['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                                <option value="processing" <?php echo $row['status'] === 'processing' ? 'selected' : ''; ?>>Processing</option>
+                                <option value="shipped" <?php echo $row['status'] === 'shipped' ? 'selected' : ''; ?>>Shipped</option>
+                                <option value="delivered" <?php echo $row['status'] === 'delivered' ? 'selected' : ''; ?>>Delivered</option>
+                                <option value="cancelled" <?php echo $row['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                              </select>
+                              <a href="order-details.php?id=<?php echo $row['order_id']; ?>" class="btn btn-sm btn-primary">
+                                <i class="fas fa-eye"></i> View
+                              </a>
+                            </div>
                           </td>
                         </tr>
                       <?php
@@ -202,6 +213,15 @@ $result = mysqli_query($conn, $query);
       </div>
     </div>
   </div>
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="statusToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body"></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -218,6 +238,66 @@ $result = mysqli_query($conn, $query);
 
       window.location.href = url.slice(0, -1); // Remove trailing &
     }
+
+    // Initialize toast
+    const statusToast = document.getElementById('statusToast');
+    const toast = new bootstrap.Toast(statusToast);
+
+    // Handle status changes
+    document.querySelectorAll('.status-select').forEach(select => {
+      select.addEventListener('change', async function() {
+        const orderId = this.dataset.orderId;
+        const currentStatus = this.dataset.currentStatus;
+        const newStatus = this.value;
+
+        try {
+          const formData = new FormData();
+          formData.append('order_id', orderId);
+          formData.append('status', newStatus);
+
+          const response = await fetch('update-order-status.php', {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // Update the status badge
+            const statusBadge = this.closest('tr').querySelector('.badge');
+            statusBadge.className = `badge bg-${
+              newStatus === 'pending' ? 'warning' :
+              newStatus === 'processing' ? 'info' :
+              newStatus === 'shipped' ? 'primary' :
+              newStatus === 'delivered' ? 'success' :
+              newStatus === 'cancelled' ? 'danger' : 'secondary'
+            }`;
+            statusBadge.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+
+            // Show success toast
+            statusToast.classList.remove('bg-danger');
+            statusToast.classList.add('bg-success');
+            statusToast.querySelector('.toast-body').textContent = 'Order status updated successfully';
+            toast.show();
+
+            // Update current status data attribute
+            this.dataset.currentStatus = newStatus;
+          } else {
+            throw new Error(data.message);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          // Show error toast
+          statusToast.classList.remove('bg-success');
+          statusToast.classList.add('bg-danger');
+          statusToast.querySelector('.toast-body').textContent = 'Failed to update order status';
+          toast.show();
+
+          // Revert the select to the previous value
+          this.value = currentStatus;
+        }
+      });
+    });
   </script>
 </body>
 
