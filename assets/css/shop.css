@@ -14,6 +14,7 @@ body {
 .product-img {
     height: 250px;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
 .category-filter {
@@ -37,4 +38,22 @@ body {
 
 .category-list label {
     cursor: pointer;
+}
+
+.product-link {
+    display: block;
+    overflow: hidden;
+}
+
+.product-link:hover .product-img {
+    transform: scale(1.05);
+}
+
+.product-title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-title-link:hover {
+    color: #666;
 }

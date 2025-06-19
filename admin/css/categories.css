@@ -6,7 +6,6 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: #f4f6f9;
     min-height: 100vh;
 }
@@ -39,7 +38,8 @@ body {
 .content-header h2 {
     margin: 0;
     color: #333;
-    font-size: 24px;
+    font-size: 1.75rem;
+    font-weight: 600;
 }
 
 .menu-toggle {
@@ -80,6 +80,7 @@ body {
     color: #333;
     font-weight: 600;
     padding: 15px;
+    font-size: 0.95rem;
 }
 
 .table tbody td {
@@ -101,6 +102,8 @@ body {
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
 .btn i {
@@ -181,7 +184,8 @@ body {
 .modal-header h3 {
     margin: 0;
     color: #333;
-    font-size: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .close-modal {
