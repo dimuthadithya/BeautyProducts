@@ -1,7 +1,73 @@
 <?php
+session_start();
 $pageTitle = "Order Details";
 $additionalCss = ["assets/css/order-details.css"];
+require_once 'config/db_conn.php';
 include 'components/header.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+    exit;
+}
+
+// Check if order ID is provided
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    header('Location: profile.php');
+    exit;
+}
+
+$order_id = (int)$_GET['id'];
+$user_id = $_SESSION['user_id'];
+
+// Get order information
+$stmt = $conn->prepare("
+    SELECT o.*, u.first_name, u.last_name
+    FROM orders o
+    JOIN users u ON o.user_id = u.user_id
+    WHERE o.order_id = ? AND o.user_id = ?
+");
+$stmt->bind_param("ii", $order_id, $user_id);
+$stmt->execute();
+$order = $stmt->get_result()->fetch_assoc();
+
+if (!$order) {
+    header('Location: profile.php');
+    exit;
+}
+
+// Get order items
+$stmt = $conn->prepare("
+    SELECT oi.*, p.name, p.image_url, c.name as category_name
+    FROM order_items oi
+    JOIN products p ON oi.product_id = p.product_id
+    JOIN categories c ON p.category_id = c.category_id
+    WHERE oi.order_id = ?
+");
+$stmt->bind_param("i", $order_id);
+$stmt->execute();
+$order_items = $stmt->get_result();
+
+// Calculate totals
+$subtotal = 0;
+$items = [];
+while ($item = $order_items->fetch_assoc()) {
+    $items[] = $item;
+    $subtotal += $item['price_per_unit'] * $item['quantity'];
+}
+
+$shipping = 5.00;
+$tax = round($subtotal * 0.10, 2);
+$total = round($subtotal + $shipping + $tax, 2);
+
+// Status badge colors
+$status_colors = [
+    'pending' => 'warning',
+    'processing' => 'info',
+    'shipped' => 'primary',
+    'delivered' => 'success',
+    'cancelled' => 'danger'
+];
 ?>
 
 <?php include 'components/nav.php'; ?>
@@ -22,25 +88,25 @@ include 'components/header.php';
                 <div class="col-md-3">
                     <div class="info-item">
                         <h6>Order Number</h6>
-                        <p>#ORD-2025-06-17</p>
+                        <p>#<?php echo str_pad($order['order_id'], 6, '0', STR_PAD_LEFT); ?></p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="info-item">
                         <h6>Order Date</h6>
-                        <p>June 17, 2025</p>
+                        <p><?php echo date('F j, Y', strtotime($order['created_at'])); ?></p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="info-item">
                         <h6>Status</h6>
-                        <span class="badge bg-success">Delivered</span>
+                        <span class="badge bg-<?php echo $status_colors[$order['status']]; ?>"><?php echo ucfirst($order['status']); ?></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="info-item">
                         <h6>Total Amount</h6>
-                        <p>LKR 76.47</p>
+                        <p>LKR <?php echo number_format($order['total_amount'], 2); ?></p>
                     </div>
                 </div>
             </div>
@@ -51,43 +117,49 @@ include 'components/header.php';
                 <!-- Order Items -->
                 <div class="order-items-card">
                     <h4>Order Items</h4>
-                    <div class="order-item">
-                        <div class="row align-items-center">
-                            <div class="col-md-2">
-                                <img
-                                    src="https://via.placeholder.com/100"
-                                    alt="Product"
-                                    class="img-fluid" />
-                            </div>
-                            <div class="col-md-6">
-                                <h5>Natural Face Cream</h5>
-                                <p class="text-muted">Category: Skincare</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p class="quantity">Qty: 1</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p class="price">LKR 24.99</p>
+                    <?php foreach ($items as $item): ?>
+                        <div class="order-item">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img
+                                        src="<?php echo htmlspecialchars($item['image_url']); ?>"
+                                        alt="<?php echo htmlspecialchars($item['name']); ?>"
+                                        class="img-fluid" />
+                                </div>
+                                <div class="col-md-6">
+                                    <h5><?php echo htmlspecialchars($item['name']); ?></h5>
+                                    <p class="text-muted">Category: <?php echo htmlspecialchars($item['category_name']); ?></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="quantity">Qty: <?php echo $item['quantity']; ?></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="price">LKR <?php echo number_format($item['price_per_unit'] * $item['quantity'], 2); ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="order-item">
-                        <div class="row align-items-center">
-                            <div class="col-md-2">
-                                <img
-                                    src="https://via.placeholder.com/100"
-                                    alt="Product"
-                                    class="img-fluid" />
-                            </div>
+                    <?php endforeach; ?>
+
+                    <div class="order-summary mt-4">
+                        <div class="row justify-content-end">
                             <div class="col-md-6">
-                                <h5>Organic Lipstick</h5>
-                                <p class="text-muted">Category: Makeup</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p class="quantity">Qty: 2</p>
-                            </div>
-                            <div class="col-md-2">
-                                <p class="price">LKR 39.98</p>
+                                <div class="summary-item d-flex justify-content-between">
+                                    <span>Subtotal:</span>
+                                    <span>LKR <?php echo number_format($subtotal, 2); ?></span>
+                                </div>
+                                <div class="summary-item d-flex justify-content-between">
+                                    <span>Shipping:</span>
+                                    <span>LKR <?php echo number_format($shipping, 2); ?></span>
+                                </div>
+                                <div class="summary-item d-flex justify-content-between">
+                                    <span>Tax (10%):</span>
+                                    <span>LKR <?php echo number_format($tax, 2); ?></span>
+                                </div>
+                                <hr>
+                                <div class="summary-item d-flex justify-content-between">
+                                    <strong>Total:</strong>
+                                    <strong>LKR <?php echo number_format($total, 2); ?></strong>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -101,43 +173,46 @@ include 'components/header.php';
                     <div class="delivery-address">
                         <h6>Shipping Address</h6>
                         <p>
-                            John Doe<br />
-                            123 Beauty Street<br />
-                            New York, NY 10001<br />
-                            United States
+                            <?php
+                            echo htmlspecialchars($order['first_name'] . ' ' . $order['last_name']) . '<br>';
+                            echo nl2br(htmlspecialchars($order['shipping_address']));
+                            ?>
                         </p>
                     </div>
                     <hr />
                     <div class="delivery-timeline">
-                        <h6>Delivery Timeline</h6>
-                        <div class="timeline-item completed">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <h6>Order Placed</h6>
-                                <p>June 17, 2025 - 10:30 AM</p>
+                        <h6>Order Status Timeline</h6>
+                        <?php
+                        $statuses = ['pending', 'processing', 'shipped', 'delivered'];
+                        $current_status_index = array_search($order['status'], $statuses);
+
+                        foreach ($statuses as $index => $status):
+                            $is_completed = $index <= $current_status_index;
+                            if ($order['status'] !== 'cancelled' || $status === 'pending'):
+                        ?>
+                                <div class="timeline-item <?php echo $is_completed ? 'completed' : ''; ?>">
+                                    <i class="fas <?php echo $is_completed ? 'fa-check-circle' : 'fa-circle'; ?>"></i>
+                                    <div>
+                                        <h6><?php echo ucfirst($status); ?></h6>
+                                        <?php if ($is_completed && $status === $order['status']): ?>
+                                            <p><?php echo date('F j, Y - g:i A', strtotime($order['created_at'])); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php
+                            endif;
+                        endforeach;
+
+                        if ($order['status'] === 'cancelled'):
+                            ?>
+                            <div class="timeline-item completed">
+                                <i class="fas fa-times-circle text-danger"></i>
+                                <div>
+                                    <h6 class="text-danger">Cancelled</h6>
+                                    <p><?php echo date('F j, Y - g:i A', strtotime($order['created_at'])); ?></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="timeline-item completed">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <h6>Order Processed</h6>
-                                <p>June 17, 2025 - 2:15 PM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item completed">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <h6>Shipped</h6>
-                                <p>June 18, 2025 - 9:00 AM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item completed">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <h6>Delivered</h6>
-                                <p>June 20, 2025 - 2:30 PM</p>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
