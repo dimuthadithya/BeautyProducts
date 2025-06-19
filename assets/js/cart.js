@@ -22,7 +22,8 @@ function addToCart(productId, quantity = 1) {
             if (data.success) {
               // Show success message
               const toast = document.createElement('div');
-              toast.className = 'toast show position-fixed top-0 end-0 m-3';
+              toast.className =
+                'toast show position-fixed bottom-0 mt-2 end-0 m-3';
               toast.setAttribute('role', 'alert');
               toast.innerHTML = `
               <div class="toast-header bg-success text-white">
