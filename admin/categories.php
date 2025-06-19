@@ -70,7 +70,7 @@ if (isset($_POST['update_category'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beauty Admin - Categories</title>
+  <title>Categories - Beauty Store Admin</title>
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
@@ -84,8 +84,9 @@ if (isset($_POST['update_category'])) {
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/categories.css" />
   <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/categories.css" />
 </head>
 
 <body>
@@ -95,13 +96,11 @@ if (isset($_POST['update_category'])) {
 
     <!-- Main Content -->
     <div class="main-content">
-      <!-- Header -->
-      <div class="content-header">
-        <button class="menu-toggle" id="sidebarToggle">
-          <i class="fas fa-bars"></i>
-        </button>
-        <h2>Category Management</h2>
-      </div>
+      <?php
+      $pageTitle = "Category Management";
+      include('include/header.php');
+      ?>
+
       <!-- Content Area -->
       <div class="content">
         <!-- Add Category Button -->
@@ -136,9 +135,9 @@ if (isset($_POST['update_category'])) {
                 <tbody>
                   <?php
                   $query = "SELECT c.*, COUNT(p.product_id) as product_count 
-                             FROM categories c 
-                             LEFT JOIN products p ON c.category_id = p.category_id 
-                             GROUP BY c.category_id";
+                                             FROM categories c 
+                                             LEFT JOIN products p ON c.category_id = p.category_id 
+                                             GROUP BY c.category_id";
                   $result = mysqli_query($conn, $query);
                   while ($row = mysqli_fetch_assoc($result)):
                   ?>
@@ -167,53 +166,52 @@ if (isset($_POST['update_category'])) {
           </div>
         </div>
       </div>
-    </div>
-  </div> <!-- Add/Edit Category Modal -->
-  <div class="modal" id="categoryModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="modalTitle">Add New Category</h3>
-        <button class="close-modal" aria-label="Close">×</button>
+    </div> <!-- Add/Edit Category Modal -->
+    <div class="modal" id="categoryModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">Add New Category</h3>
+          <button class="close-modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <form id="categoryForm" method="POST">
+            <input type="hidden" name="category_id" id="category_id">
+            <div class="mb-3">
+              <label for="name" class="form-label">Category Name</label>
+              <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="saveCategory" name="add_category">Save Category</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="categoryForm" method="POST">
-          <input type="hidden" name="category_id" id="category_id">
-          <div class="mb-3">
-            <label for="name" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary close-modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" id="saveCategory" name="add_category">Save Category</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
 
-  <!-- Delete Confirmation Modal -->
-  <div class="modal" id="deleteModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Delete Category</h3>
-        <button class="close-modal" aria-label="Close">×</button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete this category?</p>
-        <form method="POST">
-          <input type="hidden" name="category_id" id="delete_category_id">
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary close-modal">Cancel</button>
-            <button type="submit" name="delete_category" class="btn btn-danger">Delete</button>
-          </div>
-        </form>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Delete Category</h3>
+          <button class="close-modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this category?</p>
+          <form method="POST">
+            <input type="hidden" name="category_id" id="delete_category_id">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+              <button type="submit" name="delete_category" class="btn btn-danger">Delete</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
   </div>
   <div class="modal-body">
     <form id="categoryForm">
