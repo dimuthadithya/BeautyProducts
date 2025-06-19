@@ -26,62 +26,19 @@ include 'components/header.php';
   <div class="container">
     <h2 class="text-center mb-5" data-aos="fade-up">Featured Products</h2>
     <div class="row">
-      <!-- Product 1 -->
-      <div class="col-md-3" data-aos="fade-up">
-        <div class="card product-card">
-          <img
-            src="https://images.unsplash.com/photo-1571875257727-256c39da42af"
-            class="card-img-top product-img"
-            alt="Product" />
-          <div class="card-body">
-            <h5 class="card-title">Natural Moisturizer</h5>
-            <p class="card-text">LKR 24.99</p>
-            <button onclick="addToCart(1)" class="btn btn-outline-dark w-100">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-      <!-- Product 2 -->
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-        <div class="card product-card">
-          <img
-            src="https://images.unsplash.com/photo-1596462502278-27bfdc403348"
-            class="card-img-top product-img"
-            alt="Organic Lipstick" />
-          <div class="card-body">
-            <h5 class="card-title">Organic Lipstick</h5>
-            <p class="card-text">LKR 19.99</p>
-            <button onclick="addToCart(2)" class="btn btn-outline-dark w-100">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-      <!-- Product 3 -->
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-        <div class="card product-card">
-          <img
-            src="https://images.unsplash.com/photo-1571875257727-256c39da42af"
-            class="card-img-top product-img"
-            alt="Product" />
-          <div class="card-body">
-            <h5 class="card-title">Night Cream</h5>
-            <p class="card-text">LKR 34.99</p>
-            <button onclick="addToCart(3)" class="btn btn-outline-dark w-100">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-      <!-- Product 4 -->
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-        <div class="card product-card">
-          <img
-            src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be"
-            class="card-img-top product-img"
-            alt="Face Serum" />
-          <div class="card-body">
-            <h5 class="card-title">Face Serum</h5>
-            <p class="card-text">LKR 29.99</p>
-            <button onclick="addToCart(4)" class="btn btn-outline-dark w-100">Add to Cart</button>
-          </div>
-        </div>
-      </div>
+      <?php
+      require_once 'components/product-card.php';
+
+      // Get 4 random products for featured section
+      $query = "SELECT * FROM products ORDER BY RAND() LIMIT 4";
+      $result = mysqli_query($conn, $query);
+
+      $delay = 0;
+      while ($product = mysqli_fetch_assoc($result)) {
+        renderProductCard($product, $delay);
+        $delay += 100;
+      }
+      ?>
     </div>
   </div>
 </section>
