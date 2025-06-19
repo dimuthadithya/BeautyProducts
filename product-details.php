@@ -27,7 +27,7 @@ include 'components/header.php';
 <!-- Product Details Section -->
 <main class="product-details mt-5">
     <div class="product-container">
-        <div class="product-images">
+        <div class="product-images mt-5">
             <div class="main-image">
                 <img
                     src="<?php echo htmlspecialchars($product['image_url']); ?>"
