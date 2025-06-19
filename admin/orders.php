@@ -1,10 +1,71 @@
+<?php
+require_once('../config/db_conn.php');
+session_start();
+
+// Get filter values
+$status = isset($_GET['status']) ? $_GET['status'] : '';
+$date_range = isset($_GET['date_range']) ? $_GET['date_range'] : 'last_7_days';
+$sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'latest';
+
+// Build the query
+$query = "SELECT o.*, u.first_name, u.last_name, u.email,
+          GROUP_CONCAT(p.name SEPARATOR '||') as product_names,
+          GROUP_CONCAT(p.image_url SEPARATOR '||') as product_images,
+          GROUP_CONCAT(oi.quantity SEPARATOR '||') as quantities
+          FROM orders o
+          JOIN users u ON o.user_id = u.user_id
+          JOIN order_items oi ON o.order_id = oi.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          WHERE 1=1";
+
+// Add status filter
+if (!empty($status)) {
+  $query .= " AND o.status = '" . mysqli_real_escape_string($conn, $status) . "'";
+}
+
+// Add date range filter
+switch ($date_range) {
+  case 'last_7_days':
+    $query .= " AND o.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+    break;
+  case 'last_30_days':
+    $query .= " AND o.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+    break;
+  case 'last_month':
+    $query .= " AND o.created_at >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+    break;
+}
+
+
+
+// Group by order_id to avoid duplicates
+$query .= " GROUP BY o.order_id";
+
+// Add sorting
+switch ($sort_by) {
+  case 'oldest':
+    $query .= " ORDER BY o.created_at ASC";
+    break;
+  case 'amount_high':
+    $query .= " ORDER BY o.total_amount DESC";
+    break;
+  case 'amount_low':
+    $query .= " ORDER BY o.total_amount ASC";
+    break;
+  default: // latest
+    $query .= " ORDER BY o.created_at DESC";
+}
+
+$result = mysqli_query($conn, $query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Orders - Beauty Store Admin</title> <?php include('include/head.php'); ?>
+  <title>Orders - Beauty Store Admin</title>
+  <?php include('include/head.php'); ?>
   <link rel="stylesheet" href="css/orders.css" />
 </head>
 
@@ -28,40 +89,29 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-3 mb-3">
-                  <label class="form-label">Order Status</label>
-                  <select class="form-select">
+                  <label class="form-label">Order Status</label> <select class="form-select" name="status" onchange="updateFilters()">
                     <option value="">All Status</option>
-                    <option>Pending</option>
-                    <option>Processing</option>
-                    <option>Shipped</option>
-                    <option>Delivered</option>
-                    <option>Cancelled</option>
+                    <option value="pending" <?php echo $status === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                    <option value="processing" <?php echo $status === 'processing' ? 'selected' : ''; ?>>Processing</option>
+                    <option value="shipped" <?php echo $status === 'shipped' ? 'selected' : ''; ?>>Shipped</option>
+                    <option value="delivered" <?php echo $status === 'delivered' ? 'selected' : ''; ?>>Delivered</option>
+                    <option value="cancelled" <?php echo $status === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
                   </select>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <label class="form-label">Date Range</label>
-                  <select class="form-select">
-                    <option>Last 7 Days</option>
-                    <option>Last 30 Days</option>
-                    <option>Last Month</option>
-                    <option>Custom Range</option>
+                  <label class="form-label">Date Range</label> <select class="form-select" name="date_range" onchange="updateFilters()">
+                    <option value="last_7_days" <?php echo $date_range === 'last_7_days' ? 'selected' : ''; ?>>Last 7 Days</option>
+                    <option value="last_30_days" <?php echo $date_range === 'last_30_days' ? 'selected' : ''; ?>>Last 30 Days</option>
+                    <option value="last_month" <?php echo $date_range === 'last_month' ? 'selected' : ''; ?>>Last Month</option>
                   </select>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <label class="form-label">Sort By</label>
-                  <select class="form-select">
-                    <option>Latest First</option>
-                    <option>Oldest First</option>
-                    <option>Amount: High to Low</option>
-                    <option>Amount: Low to High</option>
+                  <label class="form-label">Sort By</label> <select class="form-select" name="sort_by" onchange="updateFilters()">
+                    <option value="latest" <?php echo $sort_by === 'latest' ? 'selected' : ''; ?>>Latest First</option>
+                    <option value="oldest" <?php echo $sort_by === 'oldest' ? 'selected' : ''; ?>>Oldest First</option>
+                    <option value="amount_high" <?php echo $sort_by === 'amount_high' ? 'selected' : ''; ?>>Amount: High to Low</option>
+                    <option value="amount_low" <?php echo $sort_by === 'amount_low' ? 'selected' : ''; ?>>Amount: Low to High</option>
                   </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label class="form-label">Search Orders</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Order ID or Customer name..." />
                 </div>
               </div>
             </div>
@@ -84,39 +134,65 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>#ORD-001</td>
-                      <td>
-                        <div>John Doe</div>
-                        <small class="text-muted">john@example.com</small>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img
-                            src="https://via.placeholder.com/50"
-                            alt="Product"
-                            class="me-2" />
-                          <div>
-                            <div>Natural Moisturizer</div>
-                            <small class="text-muted">2 items</small>
-                          </div>
-                        </div>
-                      </td>
-                      <td>2025-06-17</td>
-                      <td>LKR 49.98</td>
-                      <td>
-                        <span class="order-status status-delivered">Delivered</span>
-                      </td>
-                      <td>
-                        <button
-                          class="btn btn-sm btn-primary"
-                          data-bs-toggle="modal"
-                          data-bs-target="#orderDetailsModal">
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                    <!-- More order rows... -->
+                    <?php
+                    if (mysqli_num_rows($result) > 0) {
+                      while ($row = mysqli_fetch_assoc($result)) {
+                        $products = explode('||', $row['product_names']);
+                        $images = explode('||', $row['product_images']);
+                        $quantities = explode('||', $row['quantities']);
+                    ?>
+                        <tr>
+                          <td>#ORD-<?php echo str_pad($row['order_id'], 3, '0', STR_PAD_LEFT); ?></td>
+                          <td>
+                            <div><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></div>
+                            <small class="text-muted"><?php echo htmlspecialchars($row['email']); ?></small>
+                          </td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <img
+                                src="../<?php echo htmlspecialchars($images[0]); ?>"
+                                alt="<?php echo htmlspecialchars($products[0]); ?>"
+                                class="me-2"
+                                style="width: 50px; height: 50px; object-fit: cover;" />
+                              <div>
+                                <div><?php echo htmlspecialchars($products[0]); ?></div>
+                                <small class="text-muted"><?php
+                                                          echo count($products) > 1 ? '+ ' . (count($products) - 1) . ' more items' : '';
+                                                          ?></small>
+                              </div>
+                            </div>
+                          </td>
+                          <td><?php echo date('Y-m-d', strtotime($row['created_at'])); ?></td>
+                          <td>LKR <?php echo number_format($row['total_amount'], 2); ?></td>
+                          <td>
+                            <span class="badge bg-<?php
+                                                  echo match ($row['status']) {
+                                                    'pending' => 'warning',
+                                                    'processing' => 'info',
+                                                    'shipped' => 'primary',
+                                                    'delivered' => 'success',
+                                                    'cancelled' => 'danger',
+                                                    default => 'secondary'
+                                                  };
+                                                  ?>">
+                              <?php echo ucfirst($row['status']); ?>
+                            </span>
+                          </td>
+                          <td>
+                            <a href="order-details.php?id=<?php echo $row['order_id']; ?>" class="btn btn-sm btn-primary">
+                              <i class="fas fa-eye"></i> View
+                            </a>
+                          </td>
+                        </tr>
+                      <?php
+                      }
+                    } else {
+                      ?>
+                      <tr>
+                        <td colspan="7" class="text-center">No orders found</td>
+                      </tr>
+                    <?php
+                    }                    ?>
                   </tbody>
                 </table>
               </div>
@@ -124,129 +200,25 @@
           </div>
         </div>
       </div>
-
-      <!-- Order Details Modal -->
-      <div class="modal fade" id="orderDetailsModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Order #ORD-001</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-8">
-                  <!-- Order Items -->
-                  <h6>Order Items</h6>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Price</th>
-                          <th>Quantity</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <img
-                                src="https://via.placeholder.com/50"
-                                alt="Product"
-                                class="me-2" />
-                              <div>Natural Moisturizer</div>
-                            </div>
-                          </td>
-                          <td>LKR 24.99</td>
-                          <td>2</td>
-                          <td>LKR 49.98</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <!-- Tracking Information -->
-                  <h6 class="mt-4">Order Timeline</h6>
-                  <div class="tracking-timeline">
-                    <div class="tracking-item">
-                      <div class="tracking-date">2025-06-17 14:30</div>
-                      <div class="tracking-status">Delivered</div>
-                      <div class="text-muted">Package delivered to customer</div>
-                    </div>
-                    <div class="tracking-item">
-                      <div class="tracking-date">2025-06-16 09:45</div>
-                      <div class="tracking-status">Out for Delivery</div>
-                      <div class="text-muted">Package is out for delivery</div>
-                    </div>
-                    <div class="tracking-item">
-                      <div class="tracking-date">2025-06-15 18:20</div>
-                      <div class="tracking-status">Shipped</div>
-                      <div class="text-muted">Package has left our warehouse</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <!-- Order Summary -->
-                  <div class="order-summary">
-                    <h6>Order Summary</h6>
-                    <hr />
-                    <div class="d-flex justify-content-between mb-2">
-                      <span>Subtotal</span>
-                      <span>LKR 49.98</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                      <span>Shipping</span>
-                      <span>LKR 5.00</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                      <span>Tax</span>
-                      <span>LKR 2.75</span>
-                    </div>
-                    <hr />
-                    <div class="d-flex justify-content-between total-row">
-                      <span>Total</span>
-                      <span>LKR 57.73</span>
-                    </div>
-                  </div>
-
-                  <!-- Customer Information -->
-                  <div class="order-details mt-4">
-                    <h6>Customer Details</h6>
-                    <p class="mb-1"><strong>Name:</strong> John Doe</p>
-                    <p class="mb-1"><strong>Email:</strong> john@example.com</p>
-                    <p class="mb-1"><strong>Phone:</strong> +1 234 567 890</p>
-                    <hr />
-                    <h6>Shipping Address</h6>
-                    <p class="mb-0">
-                      123 Main St<br />Apt 4B<br />New York, NY 10001<br />United
-                      States
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal">
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">Update Status</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bootstrap JS -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </div>
   </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateFilters() {
+      const status = document.querySelector('select[name="status"]').value;
+      const dateRange = document.querySelector('select[name="date_range"]').value;
+      const sortBy = document.querySelector('select[name="sort_by"]').value;
+
+      let url = window.location.pathname + '?';
+      if (status) url += `status=${status}&`;
+      if (dateRange) url += `date_range=${dateRange}&`;
+      if (sortBy) url += `sort_by=${sortBy}&`;
+
+      window.location.href = url.slice(0, -1); // Remove trailing &
+    }
+  </script>
 </body>
 
 </html>
