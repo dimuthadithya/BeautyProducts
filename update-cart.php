@@ -69,20 +69,19 @@ if (isset($_POST['action'])) {
         $stmt->execute();
         $result = $stmt->get_result();
         $totals = $result->fetch_assoc();
-
-        $subtotal = $totals['subtotal'] ?? 0;
+        $subtotal = (float)($totals['subtotal'] ?? 0);
         $shipping = 5.00;
-        $tax = $subtotal * 0.10;
-        $total = $subtotal + $shipping + $tax;
+        $tax = round($subtotal * 0.10, 2); // Round to 2 decimal places
+        $total = round($subtotal + $shipping + $tax, 2); // Round final total to 2 decimal places
 
         echo json_encode([
             'success' => true,
             'message' => $action === 'update' ? 'Cart updated successfully' : 'Item removed successfully',
-            'subtotal' => number_format($subtotal, 2),
-            'shipping' => number_format($shipping, 2),
-            'tax' => number_format($tax, 2),
-            'total' => number_format($total, 2),
-            'cart_count' => $totals['cart_count'] ?? 0
+            'subtotal' => number_format($subtotal, 2, '.', ''),
+            'shipping' => number_format($shipping, 2, '.', ''),
+            'tax' => number_format($tax, 2, '.', ''),
+            'total' => number_format($total, 2, '.', ''),
+            'cart_count' => (int)($totals['cart_count'] ?? 0)
         ]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Error updating cart']);

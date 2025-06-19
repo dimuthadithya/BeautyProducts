@@ -94,18 +94,7 @@ function updateQuantity(productId, action, value = null) {
         input.value = quantity;
 
         // Update summary values
-        document.querySelector(
-          '.summary-item:nth-child(1) span:last-child'
-        ).textContent = `LKR ${data.subtotal}`;
-        document.querySelector(
-          '.summary-item:nth-child(2) span:last-child'
-        ).textContent = `LKR ${data.shipping}`;
-        document.querySelector(
-          '.summary-item:nth-child(3) span:last-child'
-        ).textContent = `LKR ${data.tax}`;
-        document.querySelector(
-          '.summary-item.total span:last-child'
-        ).textContent = `LKR ${data.total}`;
+        updateSummaryValues(data.subtotal, data.shipping, data.tax, data.total);
 
         // Update cart count in navbar if it exists
         const cartCount = document.querySelector('.cart-count');
@@ -140,21 +129,8 @@ function removeFromCart(cartId) {
       if (data.success) {
         // Remove the cart item from DOM
         const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
-        cartItem.remove();
-
-        // Update summary values
-        document.querySelector(
-          '.summary-item:nth-child(1) span:last-child'
-        ).textContent = `LKR ${data.subtotal}`;
-        document.querySelector(
-          '.summary-item:nth-child(2) span:last-child'
-        ).textContent = `LKR ${data.shipping}`;
-        document.querySelector(
-          '.summary-item:nth-child(3) span:last-child'
-        ).textContent = `LKR ${data.tax}`;
-        document.querySelector(
-          '.summary-item.total span:last-child'
-        ).textContent = `LKR ${data.total}`;
+        cartItem.remove(); // Update summary values
+        updateSummaryValues(data.subtotal, data.shipping, data.tax, data.total);
 
         // Update cart count in navbar if it exists
         const cartCount = document.querySelector('.cart-count');
@@ -174,4 +150,25 @@ function removeFromCart(cartId) {
       console.error('Error:', error);
       alert('An error occurred while removing the item from cart');
     });
+}
+
+// Helper function to format currency
+function formatCurrency(amount) {
+  return parseFloat(amount).toFixed(2);
+}
+
+// Helper function to update summary values
+function updateSummaryValues(subtotal, shipping, tax, total) {
+  document.querySelector(
+    '.summary-item:nth-child(1) span:last-child'
+  ).textContent = `LKR ${formatCurrency(subtotal)}`;
+  document.querySelector(
+    '.summary-item:nth-child(2) span:last-child'
+  ).textContent = `LKR ${formatCurrency(shipping)}`;
+  document.querySelector(
+    '.summary-item:nth-child(3) span:last-child'
+  ).textContent = `LKR ${formatCurrency(tax)}`;
+  document.querySelector(
+    '.summary-item.total span:last-child'
+  ).textContent = `LKR ${formatCurrency(total)}`;
 }
