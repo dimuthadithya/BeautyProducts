@@ -70,7 +70,7 @@ include 'components/header.php';
                             <div class="card-body">
                                 <h5 class="card-title">Natural Moisturizer</h5>
                                 <p class="card-text">LKR 24.99</p>
-                                <a href="#" class="btn btn-outline-dark w-100">Add to Cart</a>
+                                <button onclick="addToCart(1)" class="btn btn-outline-dark w-100">Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@ include 'components/header.php';
                             <div class="card-body">
                                 <h5 class="card-title">Organic Lipstick</h5>
                                 <p class="card-text">LKR 19.99</p>
-                                <a href="#" class="btn btn-outline-dark w-100">Add to Cart</a>
+                                <button onclick="addToCart(2)" class="btn btn-outline-dark w-100">Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ include 'components/header.php';
                             <div class="card-body">
                                 <h5 class="card-title">Night Cream</h5>
                                 <p class="card-text">LKR 34.99</p>
-                                <a href="#" class="btn btn-outline-dark w-100">Add to Cart</a>
+                                <button onclick="addToCart(3)" class="btn btn-outline-dark w-100">Add to Cart</button>
                             </div>
                         </div>
                     </div>

@@ -71,9 +71,8 @@ include 'components/header.php';
                     <button onclick="incrementQuantity()">+</button>
                 </div>
             </div>
-            <div class="product-actions">
-                <button class="add-to-cart-btn">Add to Cart</button>
-                <button class="buy-now-btn">Buy Now</button>
+            <div class="product-actions"> <button onclick="addToCart(<?php echo isset($_GET['id']) ? $_GET['id'] : 1; ?>)" class="add-to-cart-btn">Add to Cart</button>
+                <button onclick="buyNow(<?php echo isset($_GET['id']) ? $_GET['id'] : 1; ?>)" class="buy-now-btn">Buy Now</button>
             </div>
             <div class="additional-info">
                 <div class="info-item">

@@ -17,12 +17,13 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/nav.css" />
-    <link rel="stylesheet" href="assets/css/footer.css" />
-    <?php if (isset($additionalCss)) {
-        foreach ($additionalCss as $css) { ?>
+    <link rel="stylesheet" href="assets/css/footer.css" /> <?php if (isset($additionalCss)) {
+                                                                foreach ($additionalCss as $css) { ?>
             <link rel="stylesheet" href="<?php echo $css; ?>" />
     <?php }
-    } ?>
+                                                            } ?>
+    <!-- Cart JS -->
+    <script defer src="assets/js/cart.js"></script>
 </head>
 
 <body>
